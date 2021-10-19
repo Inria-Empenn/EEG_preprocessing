@@ -1,10 +1,10 @@
-%load('/udd/nforde/fichiercompare.mat')
+ %load('/udd/nforde/fichiercompare.mat')
 size1=41;
 size2=921600;
 mat0=zeros(size1,size2);
 %diff1=icagui4-icascript3
 %save fichiercompare.mat diff1
-cheminbase='/udd/nforde/Nina/Stage/brainstorm_db/';
+cheminbase='/udd/nforde/Nina/StageEEGpre/data/brainstorm_db/';
 
 cheminsi=strcat(cheminbase,'TutorialEpilepsyScript/data/Subject01/');
 chemingi=strcat(cheminbase,'TutorialEpilepsyGui/data/Subject01/');
@@ -24,8 +24,8 @@ elseif k==2
 end
 chemins=strcat(cheminsi,terminaison);
 cheming=strcat(chemingi,terminaison);
-%chemins='/udd/nforde/Nina/Stage/brainstorm_db/TutorialEpilepsyScript/data/Subject01/tutorial_eeg_band/data_block001_03.mat'
-%cheming='/udd/nforde/Nina/Stage/brainstorm_db/TutorialEpilepsyGui/data/Subject01/tutorial_eeg_band/data_block001_04.mat'
+%chemins='/udd/nforde/Nina/StageEEGpre/databrainstorm_db/TutorialEpilepsyScript/data/Subject01/tutorial_eeg_band/data_block001_03.mat'
+%cheming='/udd/nforde/Nina/StageEEGpre/brainstorm_db/TutorialEpilepsyGui/data/Subject01/tutorial_eeg_band/data_block001_04.mat'
 icascript1=load(chemins);
 icagui1=load(cheming);
 

@@ -5,3 +5,5 @@ RAWformat/*
 automagic-master/*
 data/*
 dependencies/*
+*.asv
+results/*

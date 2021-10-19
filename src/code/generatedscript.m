@@ -1,4 +1,4 @@
-function generatedscript(tutorial_dir)
+ function generatedscript(tutorial_dir)
 % TUTORIAL_YOKOGAWA: Script that reproduces the results of the online tutorials "Yokogawa recordings".
 %
 % CORRESPONDING ONLINE TUTORIALS:
@@ -34,7 +34,7 @@ if (nargin == 0) || isempty(tutorial_dir) || ~file_exist(tutorial_dir)
     error('The first argument must be the full path to the tutorial dataset folder.');
 end
 % Build the path of the files to import
-AnatDir = fullfile(tutorial_dir, 'sample_epilepsy', 'anatomy', 'mri');
+AnatDir = fullfile(tutorial_dir, 'sample_epilepsy', 'anatomy');
 RawFile = fullfile(tutorial_dir, 'sample_epilepsy', 'data', 'tutorial_eeg.bin');
 ElcFile = fullfile(tutorial_dir, 'sample_epilepsy', 'data', 'tutorial_electrodes.elc');
 
@@ -90,7 +90,7 @@ sFiles=bst_process('CallProcess', 'process_channel_addloc', sFiles, [], ...
      'channelfile', {ElcFile, 'XENSOR'}, ...
       'usedefault',  1, ...
       'fixunits',    1, ...
-        'vox2ras',     0)
+        'vox2ras',     0);
    
 % Start a new report
 bst_report('Start', sFiles);     
@@ -101,7 +101,7 @@ bst_report('Start', sFiles);
 %Process: Refine registration
 sFiles = bst_process('CallProcess', 'process_headpoints_refine', sFiles, [])
 
-% Process: Project electrodes on scalp
+% % Process: Project electrodes on scalp
  sFiles = bst_process('CallProcess', 'process_channel_project', sFiles, [], ...
    'sensortypes', 'EEG')
 
@@ -118,7 +118,7 @@ sFiles = bst_process('CallProcess', 'process_evt_detect_ecg', sFiles, [], ...
 % Process: Import from file
 
 SpikeFiles = {...
-    '/udd/nforde/Nina/Stage/sample_epilepsy/data/tutorial_spikes.txt'};
+    '/home/download/sample_epilepsy/data/tutorial_spikes.txt'};
  
 sFiles = bst_process('CallProcess', 'process_evt_import', sFiles, [], ...
     'evtfile', {SpikeFiles{1}, 'ARRAY-TIMES'}, ...
