@@ -2,9 +2,11 @@
 % ------------------------------------------------
 %2-426 secondes le resting state
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
-mydata = load('-mat', '/home/StageEEGpre/data/NDARAA075AMK/EEG/raw/mat_format/RestingState.mat');
-myeeg=mydata.EEG.data;
-EEG = pop_importdata('dataformat','array','nbchan',0,'data','myeeg','srate',1,'pnts',0,'xmin',0);
+% mydata = load('-mat', '/home/StageEEGpre/data/NDARAA075AMK/EEG/raw/mat_format/RestingState.mat');
+% myeeg=mydata.EEG.data;
+% EEG = pop_importdata('dataformat','array','nbchan',0,'data','myeeg','srate',1,'pnts',0,'xmin',0);
+EEG = pop_mffimport({'/home/StageEEGpre/data/NDARAA075AMK/EEG/raw/mff_format/NDARAA075AMK'},{'code'});
+
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'setname','NDARAA075AMK3nov2','gui','off'); 
 EEG = eeg_checkset( EEG );
 EEG = pop_eegfiltnew(EEG, 'locutoff',1,'plotfreqz',1);
