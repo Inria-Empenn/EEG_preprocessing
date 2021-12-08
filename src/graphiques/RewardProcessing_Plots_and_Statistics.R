@@ -17,7 +17,7 @@ library(Rfast)
 library(Hmisc)
 
 
-nbparticipants=50;
+nbparticipants=75;
 
 #Plotting Setup
 colours = c('#FB6A4A','#6BAED6') #Determine colours
@@ -101,7 +101,7 @@ xlabcw = "Time (ms)" #Determine x label title
 
 ####  Figure 2A                                                           ####
 PlotCW = ggplot(FreqCW, aes(x = Time, y = Amplitude, colour = Condition, linetype =  Condition))+ #Setup plot
-  geom_ribbon(aes(ymin = FreqCW[,3] - FreqCW[,4], ymax = FreqCW[,3] + FreqCW[,4]), colour = "blue", fill = c(rep(colours[1],600),rep(colours[2],600)), alpha = .2)+ #Add error bar ribbons
+  geom_ribbon(aes(ymin = FreqCW[,3] - FreqCW[,4], ymax = FreqCW[,3] + FreqCW[,4]), colour = NA, fill = c(rep(colours[1],600),rep(colours[2],600)), alpha = .2)+ #Add error bar ribbons
   geom_freqpoly(stat = "identity", size= 1,alpha = .8)+ #Add line plot
   geom_vline(xintercept=0, linetype="dotted")+geom_hline(yintercept=0, linetype="dotted")+ #Add time and amplitude = 0 indicator line
   scale_color_manual(values = colours)+ #Recolour the graph
