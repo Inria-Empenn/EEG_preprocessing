@@ -1,24 +1,29 @@
-
 %% PREPROCESSING                                                    
 %% Stage 1: Process data to determine noisy/faulty electrodes
 %%  Step 1.1: Pre-ICA                                               
 clear all; 
+restoredefaultpath;
+clear all; 
 % close all; 
-% clc; %First, clean the environment
-% folder = fileparts(which('/home/StageEEGpre'))
-% addpath(genpath(folder));
-% addpath('/home/StageEEGpre/src/eeglabcode/vdhrfiles/copiemod2411.m');
-% 
-% folder2 = fileparts(which('/home/dependencies/eeglab_current/')); 
-% addpath(genpath(folder2));
-% 
-% %addpath(genpath('/home/StageEEGpre'));
-% rmpath(genpath('/home/StageEEGpre/dependencies/eeglab_current/'));
-% rmpath('/home/StageEEGpre/dependencies/fieldtrip-lite-20211020');
+clc; %First, clean the environment
 
-% dossiersauv='/home/StageEEGpre/data/Rawdata10';
-%cd(uigetdir);
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to raw EEG data
+
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+addpath(genpath('/home/StageEEGpre/src'))
+
+addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-fileIO-master'))
+addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-icaTools-master'))
+addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-preProcessing-master'))
+addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-timeFrequencyAnalysis-master'))
+
+
+% addpath('/home/StageEEGpre/dependencies/eeglab_current/eeglab2021.1')
+
+addpath(genpath('/home/dependencies/eeglab_current/eeglab2021.1'))
+
+
+cd(dossier10); %Find and change working folder to raw EEG data
 
 filenames = dir('*.vhdr')
 filenames.name%Compile list of all data
@@ -49,14 +54,16 @@ for participant = 1:length(filenames) %Cycle through participants
     [EEG] = doFilter(EEG,0.1,30,4,60,EEG.srate); %Filter data: Low cutoff 0.1, high cutoff 30, order 4, notch 60
     
     %ICA
-    [EEG] = doICA(EEG,1); %Run ICA for use of eye blink removal
+%    [EEG] = doICA(EEG,1); %Run ICA for use of eye blink removal
     
     %Save Output
     save(participant_varname,'EEG'); %Save the current output so that the lengthy ICA process can run without user intervention
 end
 %%  Step 1.2: Post-ICA                                              
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S1PostICA*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -72,6 +79,10 @@ for participant = 1:length(filenames) %Cycle through participants
 %     ICAViewer %Script to navigate ICA loading topographic maps and loadings in order to decide which component(s) reflect eye blinks
 %     [EEG] = doICARemoveComponents(EEG,str2num(cell2mat(EEG.ICAcomponentsRemoved))); %Remove identified components and reconstruct EEG data
 %     
+    [EEG]= pop_clean_rawdata(EEG, 'FlatlineCriterion',5,'ChannelCriterion',0.8,'LineNoiseCriterion',4,'Highpass','off','BurstCriterion',20,'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian','WindowCriterionTolerances',[-Inf 7] );
+
+
+
     %Segment Data
     [EEG] = doSegmentData(EEG,{'S110','S111'},[-500 1498]); %Segment Data (S110 = Loss, S111 = Win)
     
@@ -86,7 +97,9 @@ for participant = 1:length(filenames) %Cycle through participants
 end
 %%  Step 1.3: Determining faulty electrodes                         
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S1Final_*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -140,7 +153,9 @@ save('Chans_rejected_auto','p_chanreject');
 %% Stage 2: Process data for analysis
 %%  Step 2.1: Pre-ICA                                               
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to raw EEG data
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to raw EEG data
 filenames = dir('*.vhdr'); %Compile list of all data
 
 %Load list of electrodes to remove 
@@ -217,7 +232,9 @@ for participant = 1:length(filenames) %Cycle through participants
 end
 %%  Step 2.2: Post-ICA                                              
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2PostICA*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -233,11 +250,15 @@ for participant = 1:length(filenames) %Cycle through participants
 %     ICAViewer %Script to navigate ICA loading topographic maps and loadings in order to decide which component(s) reflect eye blinks
 %     [EEG] = doICARemoveComponents(EEG,str2num(cell2mat(EEG.ICAcomponentsRemoved))); %Remove identified components and reconstruct EEG data
 %     
+   [EEG]= pop_clean_rawdata(EEG, 'FlatlineCriterion',5,'ChannelCriterion',0.8,'LineNoiseCriterion',4,'Highpass','off','BurstCriterion',20,'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian','WindowCriterionTolerances',[-Inf 7] );
+
     save(participant_varname,'EEG'); %Save the current output
 end
 %%  Step 2.3: Final                                                 
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2PostInvICA_*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -293,7 +314,9 @@ end
 %% EXTRACTION OF DATA %%
 %% Aggregate data across participants                               
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dossier10='/home/StageEEGpre/data/Rawdata10icaauto/'
+
+cd(dossier10); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2Final*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -348,7 +371,7 @@ both_extract = (delta_extract+theta_extract>0); %Determine all effects via the c
 WAV_data1 = permute(squeeze(All_WAV(26,:,151:750,1,:)),[3,1,2]); %Extract participants time-frequency condition 1
 WAV_data2 = permute(squeeze(All_WAV(26,:,151:750,2,:)),[3,1,2]); %Extract participants time-frequency condition 2
 WAV_diff = WAV_data1-WAV_data2; %Create difference wave
-nb=100;
+nb=10;
 for participant = 1:nb %Cycle through participants
     WAV_Delta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*delta_extract; %Confine data to significant delta activity for difference WAV
     WAV_Theta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*theta_extract; %Confine data to significant theta activity for difference WAV
