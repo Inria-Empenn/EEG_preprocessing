@@ -17,7 +17,14 @@ library(Rfast)
 library(Hmisc)
 
 
-nbparticipants=75;
+nbparticipants=73;
+
+#Plotting Setup
+
+#rm(list=ls())      pour effacer  les variables
+#dev.off(dev.list()["RStudioGD"])
+
+
 
 #Plotting Setup
 colours = c('#FB6A4A','#6BAED6') #Determine colours

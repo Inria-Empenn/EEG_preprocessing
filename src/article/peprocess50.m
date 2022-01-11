@@ -3,24 +3,22 @@ restoredefaultpath;
 clear all; 
 % close all; 
 clc; %First, clean the environment
-addpath(genpath('/home/StageEEGpre/src'))
+addpath(genpath('/home/nforde/Documents/StageEEGpre/src'))
 
-addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-fileIO-master'))
-addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-icaTools-master'))
-addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-preProcessing-master'))
-addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-timeFrequencyAnalysis-master'))
+addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-EEG-fileIO-master'))
+addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-EEG-icaTools-master'))
+addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-EEG-preProcessing-master'))
+addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-EEG-timeFrequencyAnalysis-master'))
 
 
-% addpath('/home/StageEEGpre/dependencies/eeglab_current/eeglab2021.1')
 
-addpath(genpath('/home/dependencies/eeglab_current/eeglab2021.1'))
-
+addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/eeglab_current/eeglab2021.1'))
 
 
 %% EXTRACTION OF DATA %%
 %% Aggregate data across participants                               
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/preproccessed'); %Find and change working folder to saved data from last for loop
+cd('/home/nforde/Documents/StageEEGpre/data/Stage 2.3. Part 1.1'); %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2Final*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -75,7 +73,7 @@ both_extract = (delta_extract+theta_extract>0); %Determine all effects via the c
 WAV_data1 = permute(squeeze(All_WAV(26,:,151:750,1,:)),[3,1,2]); %Extract participants time-frequency condition 1
 WAV_data2 = permute(squeeze(All_WAV(26,:,151:750,2,:)),[3,1,2]); %Extract participants time-frequency condition 2
 WAV_diff = WAV_data1-WAV_data2; %Create difference wave
-nb=50;
+nb=100;
 for participant = 1:nb %Cycle through participants
     WAV_Delta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*delta_extract; %Confine data to significant delta activity for difference WAV
     WAV_Theta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*theta_extract; %Confine data to significant theta activity for difference WAV

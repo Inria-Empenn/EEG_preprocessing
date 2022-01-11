@@ -18,24 +18,28 @@ clear all;
 
 % dossiersauv='/home/StageEEGpre/data/Rawdata10';
 %cd(uigetdir);
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to raw EEG data
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
 
-filenames = dir('*.vhdr')
+filenames = dir('*.vhdr');
 filenames.name%Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
     %Get participant name information
-    disp(['Participant: ', num2str(participant)]); %Display current participant being processed
+    disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
     participant_varname = ['RewardProcessing_S1PostICA_',participant_number{2}]; %Create new file name
     
     %Load Data
     EEG = []; %Clear past data
-    [EEG] = doLoadBVData(filenames(participant).name); %Load raw EEG data
+
+    [EEG] = doLoadBVData(filenames(participant).name  ); %Load raw EEG data
     
     %Make it a 32 channels cap - reduces any participants with a 64 channel system
     if EEG.nbchan > 31 %Determine whether current participant is a 64 channel setup
+        %a=EEG;
         [EEG] = doRemoveChannels(EEG,{'AF3','AF4','AF7','AF8','C1','C2','C5','C6','CP3','CPz','F1','F2','F5','F6','FC3','FC4','FT10','FT7','FT8','FT9','Oz','P1','P2','P5','P6','PO3','PO4','PO7','PO8','TP7','TP8','CP4'},EEG.chanlocs); %Removes electrodes that are not part of the 32 channel system 
+        %b=EEG
     end
     
     %Re-Reference
@@ -56,10 +60,13 @@ for participant = 1:length(filenames) %Cycle through participants
 end
 %%  Step 1.2: Post-ICA                                              
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
+%Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S1PostICA*'); %Compile list of all data
 
-for participant = 1:length(filenames) %Cycle through participants
+%for participant = 1:length(filenames) %Cycle through participants
+for participant = 1:length(filenames)
     disp(['Participant: ', num2str(participant)]); %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-4),'_'); %Split filename into components
     participant_varname = ['RewardProcessing_S1Final_',participant_number{3}]; %Create new file name
@@ -84,9 +91,12 @@ for participant = 1:length(filenames) %Cycle through participants
     
     save(participant_varname,'EEG'); %Save the current output
 end
-%%  Step 1.3: Determining faulty electrodes                         
+
+%%  Step 1.3: Determining faulty electrodes
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
+%Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S1Final_*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -140,13 +150,14 @@ save('Chans_rejected_auto','p_chanreject');
 %% Stage 2: Process data for analysis
 %%  Step 2.1: Pre-ICA                                               
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to raw EEG data
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
 filenames = dir('*.vhdr'); %Compile list of all data
 
 %Load list of electrodes to remove 
 load('Chans_rejected_auto.mat');
 
-for participant = 1:length(filenames) %Cycle through participants
+for participant = 77:length(filenames) %Cycle through participants
 
     %Get participant name information
     disp(['Participant: ', num2str(participant)]); %Display current participant being processed
@@ -155,7 +166,7 @@ for participant = 1:length(filenames) %Cycle through participants
 
     %Load Data
     EEG = []; %Clear past data
-    [EEG] = doLoadBVData(filenames(participant).name); %Load raw EEG data
+    [EEG] = doLoadBVData(filenames(participant).folder  ,filenames(participant).name); %Load raw EEG data
     
     %Make it a 32 channels cap - reduces any participants with a 64 channel system
     if EEG.nbchan > 31 %Determine whether current participant is a 64 channel setup
@@ -217,7 +228,9 @@ for participant = 1:length(filenames) %Cycle through participants
 end
 %%  Step 2.2: Post-ICA                                              
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dirdata='/home//nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
+%Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2PostICA*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -237,10 +250,11 @@ for participant = 1:length(filenames) %Cycle through participants
 end
 %%  Step 2.3: Final                                                 
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); 
 filenames = dir('RewardProcessing_S2PostInvICA_*'); %Compile list of all data
 
-for participant = 1:length(filenames) %Cycle through participants
+for participant = 45:length(filenames) %Cycle through participants
     disp(['Participant: ', num2str(participant)]); %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-4),'_'); %Split filename into components
     participant_varname = ['RewardProcessing_S2Final_',participant_number{3}]; %Create new file name
@@ -293,7 +307,9 @@ end
 %% EXTRACTION OF DATA %%
 %% Aggregate data across participants                               
 clear all; close all; clc; %First, clean the environment
-cd('/home/StageEEGpre/data/Rawdata10'); %Find and change working folder to saved data from last for loop
+dirdata='/home//nforde/Documents/StageEEGpre/data/Raw Data Part 1';
+cd(dirdata); %Find and change working folder to raw EEG data
+ %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2Final*'); %Compile list of all data
 
 for participant = 1:length(filenames) %Cycle through participants
@@ -348,7 +364,7 @@ both_extract = (delta_extract+theta_extract>0); %Determine all effects via the c
 WAV_data1 = permute(squeeze(All_WAV(26,:,151:750,1,:)),[3,1,2]); %Extract participants time-frequency condition 1
 WAV_data2 = permute(squeeze(All_WAV(26,:,151:750,2,:)),[3,1,2]); %Extract participants time-frequency condition 2
 WAV_diff = WAV_data1-WAV_data2; %Create difference wave
-nb=100;
+nb=73;
 for participant = 1:nb %Cycle through participants
     WAV_Delta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*delta_extract; %Confine data to significant delta activity for difference WAV
     WAV_Theta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*theta_extract; %Confine data to significant theta activity for difference WAV
