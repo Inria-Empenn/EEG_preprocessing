@@ -24,7 +24,9 @@ cd(dirdata); %Find and change working folder to raw EEG data
 filenames = dir('*.vhdr');
 filenames.name%Compile list of all data
 
-for participant = 1:length(filenames) %Cycle through participants
+%for participant = 1:length(filenames) %Cycle through participants
+for participant = 1:2%Cycle through participants
+
     %Get participant name information
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
@@ -40,6 +42,7 @@ for participant = 1:length(filenames) %Cycle through participants
         %a=EEG;
         [EEG] = doRemoveChannels(EEG,{'AF3','AF4','AF7','AF8','C1','C2','C5','C6','CP3','CPz','F1','F2','F5','F6','FC3','FC4','FT10','FT7','FT8','FT9','Oz','P1','P2','P5','P6','PO3','PO4','PO7','PO8','TP7','TP8','CP4'},EEG.chanlocs); %Removes electrodes that are not part of the 32 channel system 
         %b=EEG
+        %AF3 AF4 AF7 AF8 C1 C2 C5 C6 CP3 CPz F1 F2 F5 F6 FC3 FC4 FT10 FT7 FT8 FT9 Oz P1 P2 P5 P6 PO3 PO4 PO7 PO8 TP7 TP8 CP4
     end
     
     %Re-Reference
@@ -79,9 +82,10 @@ for participant = 1:length(filenames)
 %     ICAViewer %Script to navigate ICA loading topographic maps and loadings in order to decide which component(s) reflect eye blinks
 %     [EEG] = doICARemoveComponents(EEG,str2num(cell2mat(EEG.ICAcomponentsRemoved))); %Remove identified components and reconstruct EEG data
 %     
+a2=EEG;
     %Segment Data
     [EEG] = doSegmentData(EEG,{'S110','S111'},[-500 1498]); %Segment Data (S110 = Loss, S111 = Win)
-    
+  c2=EEG;  
     %Baseline Correction
     [EEG] = doBaseline(EEG,[-200,0]); %Baseline correction in ms
     

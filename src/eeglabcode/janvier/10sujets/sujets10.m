@@ -1,21 +1,38 @@
 % EEGLAB history file generated on the 04-Jan-2022
 % ------------------------------------------------
+% 
+% restoredefaultpath;
+% clear all; 
+% clc; %First, clean the environment
 
-restoredefaultpath;
-clear all; 
-clc; %First, clean the environment
+
+% dirprinc='/home/nforde/Documents/';
+% addpath(dirprinc+'StageEEGpre/data/Raw Data Part 1')
 
 addpath('/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1');
 addpath('/home/nforde/Documents/StageEEGpre/dependencies/eeglab_current/eeglab2021.1')
 addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-EEG-preProcessing-master'))
 
 
+dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 11';
+cd(dirdata);
+filenames = dir('*.vhdr')
+
+%for participant = 1:length(filenames) %Cycle through participants
+for participant = 1:3%Cycle through participants
+
+    %Get participant name information
+    disp(['Participant: ', num2str(participant)]) %Display current participant being processed
+    participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
+    participant_varname = ['RewardProcessing_S2Final_',participant_number{2}]; %Create new file name
+    
+
 
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
 eeglab('redraw');
 
 %chargement data
-EEG = pop_loadbv('/home/nforde/Documents/StageEEGpre/data/Raw Data Part 1/', 'RewardProcessing_001.vhdr', [1 336262], [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63]);
+EEG = pop_loadbv('/home/nforde/Documents/StageEEGpre/data/Raw Data Part 11/', filenames(participant).name);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'setname','one','gui','off'); 
 EEG = eeg_checkset( EEG );
 
@@ -68,19 +85,19 @@ eeglab redraw;
 %segment data
  %Determine markers of interest for WAV later
     markers = {'S110','S111'}; %Loss, win
-    
-[EEG] = doSegmentData(EEG,markers,[-500 1498]); %Segment Data (S110 = Loss, S111 = Win). The segment window of interest is -200 to 1000ms, and we here add 300 ms before and after this because time-frequency edge artifacts (this is different than the first pass because we were being more conservative then)
-%    -500 1298
-% EEG = pop_epoch( EEG, {  'S110'  'S111'  }, [-1  2], 'newname', 'oneingterpol pruned with ICA epochs', 'valuelim', [-500  1498], 'epochinfo', 'yes');
-% [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 4,'gui','off'); 
-%  EEG = eeg_checkset( EEG );
-% eeglab redraw;
+a=EEG;    
+% [EEG] = doSegmentData(EEG,markers,[-500 1298]); %Segment Data (S110 = Loss, S111 = Win). The segment window of interest is -200 to 1000ms, and we here add 300 ms before and after this because time-frequency edge artifacts (this is different than the first pass because we were being more conservative then)
+% b=EEG;         
+EEG = pop_epoch( EEG, {  'S110'  'S111'  }, [-1  2], 'newname', 'oneingterpol pruned with ICA epochs', 'valuelim', [-500  1498], 'epochinfo', 'yes');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 4,'gui','off'); 
+EEG = eeg_checkset( EEG );
+c=EEG;
 %baseline correction
-EEG = pop_rmbase( EEG, [-0,2 0] ,[]);
+EEG = pop_rmbase( EEG, [-200 0] ,[]);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 5,'gui','off'); 
 
 %bad segment
-% EEG = eeg_checkset( EEG );
+EEG = eeg_checkset( EEG );
 EEG = pop_eegthresh(EEG,1,[1:31] ,-50,50,-1,1.998,0,0);
 
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
@@ -99,25 +116,16 @@ addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-
     [EEG.WAV] = doWAV(EEG,markers,[],1,30,30,6); %Conduct Time-Frequency Analyses: no baseline, ranging from frequencies 1 to 30 in 30 linear steps, using a Morlet parameter of 6
     EEG.WAV.eegdata = EEG.data; %Copy WAV data
     
-%     %Reduce Data Length for FFT
-%     EEG.data = EEG.backupdata(:,1:750,:); %-500 to 1000ms 
-%     
-%     %FFT
-%     [EEG.FFT] = doFFT(EEG,markers); %Conduct FFT Analyses
-%     
-%     save(participant_varname,'EEG'); %Save the current output
-%     [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+   
 
     %Reduce Data Length for ERP
-%     EEG.data = EEG.backupdata(:,151:750,:); %-200 to 1000ms
-    
-
-%Reduce Data Length for ERP ma version
-    EEG.data = EEG.backupdata;%-200 to 1000ms
+    EEG.data = EEG.backupdata(:,151:750,:); %-200 to 1000ms
     
     %ERP
     [EEG.ERP] = doERP(EEG,markers,0); %Conduct ERP Analyses
-    EEG.ERP.data
-    save(participant_varname,'EEG'); %Save the current output
-
     
+   save(participant_varname,'EEG'); %Save the current output
+
+end   
+
+

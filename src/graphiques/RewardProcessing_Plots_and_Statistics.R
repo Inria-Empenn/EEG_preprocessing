@@ -17,7 +17,7 @@ library(Rfast)
 library(Hmisc)
 
 
-nbparticipants=73;
+nbparticipants=3;
 
 #Plotting Setup
 
