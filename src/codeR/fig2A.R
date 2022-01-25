@@ -9,7 +9,7 @@ library(Rfast)
 library(Hmisc)
 
 
-nbparticipants=90;
+nbparticipants=100;
 
 #Plotting Setup
 
@@ -50,11 +50,6 @@ FFT_APA_Style = theme(axis.line.x = element_line(color="black", size = 0.5), #Ad
 data = read.csv('RewP_Waveforms.csv',header = FALSE) #Load ERP data
 
 
-pdata = read.csv('RewP_Waveforms_AllPs.csv',header = FALSE) #Load participant ERP data
-pdata$subject = as.factor(1:nbparticipants) #Add participant ID
-pdata$condition = as.factor(c(rep(1,nbparticipants),rep(2,nbparticipants))) #Add condition ID
-pdata_original = pdata #Re-allocate variable so not to lose it (later it gets modified)
-data_Latency = read.csv('RewP_Latency.csv',header = FALSE)  #Load ERP peak time data
 
 
 

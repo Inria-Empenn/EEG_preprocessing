@@ -21,9 +21,9 @@ dirdata='/home//nforde/Documents/StageEEGpre/data/Raw Data Part 13';
 cd(dirdata); %Find and change working folder to raw EEG data
  %Find and change working folder to saved data from last for loop
 filenames = dir('RewardProcessing_S2Final*'); %Compile list of all data
-
+nb=100;
 % for participant = 1:length(filenames) %Cycle through participants
-for participant = 1:90 %Cycle through participants
+for participant = 1:nb %Cycle through participants
 
     disp(['Participant: ', num2str(participant)]); %Display current participant being processed
 
@@ -76,7 +76,7 @@ both_extract = (delta_extract+theta_extract>0); %Determine all effects via the c
 WAV_data1 = permute(squeeze(All_WAV(26,:,151:750,1,:)),[3,1,2]); %Extract participants time-frequency condition 1
 WAV_data2 = permute(squeeze(All_WAV(26,:,151:750,2,:)),[3,1,2]); %Extract participants time-frequency condition 2
 WAV_diff = WAV_data1-WAV_data2; %Create difference wave
-nb=3;
+
 for participant = 1:nb %Cycle through participants
     WAV_Delta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*delta_extract; %Confine data to significant delta activity for difference WAV
     WAV_Theta(participant,:,:) = squeeze(WAV_diff(participant,:,:)).*theta_extract; %Confine data to significant theta activity for difference WAV

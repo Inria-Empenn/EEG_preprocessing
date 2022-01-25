@@ -17,8 +17,8 @@ addpath(genpath('/home/nforde/Documents/StageEEGpre/dependencies/article/MATLAB-
 dirdata='/home/nforde/Documents/StageEEGpre/data/Raw Data Part 13';
 cd(dirdata);
 filenames = dir('*.vhdr')
-
-for participant = 10:length(filenames) %Cycle through participants
+nb=100;
+for participant = 50:nb %Cycle through participants
 
 
     %Get participant name information
@@ -67,7 +67,7 @@ EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','on');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 
 %identifier differents artifacts correspondants
-[EEG, varargout] = pop_iclabel(EEG, 'default')
+[EEG, varargout] = pop_iclabel(EEG, 'default');
 
 EEG = eeg_checkset( EEG );
 
@@ -94,7 +94,7 @@ eeglab redraw;
 %  EEG = eeg_checkset( EEG );
 % eeglab redraw;
 %baseline correction
-EEG = pop_rmbase( EEG, [-0,2 0] ,[]);
+EEG = pop_rmbase( EEG, [-200/1000,0]);
 %[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 5,'gui','off'); 
 
 %bad segment

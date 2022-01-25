@@ -19,7 +19,7 @@ cd(dirdata);
 filenames = dir('*.vhdr')
 
 %for participant = 1:length(filenames) %Cycle through participants
-for participant = 1:1%Cycle through participants
+for participant = 1:2%Cycle through participants
 
     %Get participant name information
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
@@ -68,7 +68,7 @@ EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','on');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 
 %identifier differents artifacts correspondants
-[EEG, varargout] = pop_iclabel(EEG, 'default')
+[EEG, varargout] = pop_iclabel(EEG, 'default');
 
 EEG = eeg_checkset( EEG );
 
@@ -95,9 +95,12 @@ eeglab redraw;
 %  EEG = eeg_checkset( EEG );
 % eeglab redraw;
 %baseline correction
-EEG = pop_rmbase( EEG, [-200 0] ,[]);
+EEG = pop_rmbase( EEG, [-200/1000,0]);
 %[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 5,'gui','off'); 
-
+          
+ %Baseline Correction
+%[EEG] = doBaseline(EEG,[-200/1000,0]); %Baseline correction in ms
+    
 %bad segment
 % EEG = eeg_checkset( EEG );
 EEG = pop_eegthresh(EEG,1,[1:31] ,-50,50,-1,1.998,0,0);
