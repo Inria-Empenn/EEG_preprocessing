@@ -55,13 +55,13 @@ data = read.csv('RewP_Waveforms.csv',header = FALSE) #Load ERP data
 
 #### Compute 95% confidence intervals                                     ####
 #Figure 2 Error Bars
-#for (counter in 1:600){ #Cycle through time
-# t_data = pdata[,c(counter,601,602)] #Extract current time point
-# data[counter,5] = qt(0.975,nbparticipants-1) * (sd(t_data[1:500,1])/sqrt(500)) #Determine 95% confidence interval for condition 1
-#data[counter,6] = qt(0.975,nbparticipants-1) * (sd(t_data[501:1000,1])/sqrt(500)) #Determine 95% confidence interval for condition 2
-#  data[counter,7] = qt(0.975,nbparticipants-1) * (sd(t_data[1:500,1]-t_data[501:1000,1])/sqrt(500)) #Determine 95% confidence interval for difference
-#}
 
+for (counter in 1:600){ #Cycle through time
+  t_data = pdata[,c(counter,601,602)] #Extract current time point
+  data[counter,5] = qt(0.975,nbparticipants-1) * (sd(t_data[1:500,1])/sqrt(500)) #Determine 95% confidence interval for condition 1
+  data[counter,6] = qt(0.975,nbparticipants-1) * (sd(t_data[501:1000,1])/sqrt(500)) #Determine 95% confidence interval for condition 2
+  data[counter,7] = qt(0.975,nbparticipants-1) * (sd(t_data[1:500,1]-t_data[501:1000,1])/sqrt(500)) #Determine 95% confidence interval for difference
+}
 
 ##########################################################################
 #### Plotting                                                             ####

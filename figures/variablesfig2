@@ -1,0 +1,8 @@
+Choses à regarder pour l'ecart type de la figure 2:
+-pdata = read.csv('RewP_Waveforms_AllPs.csv',header = FALSE) #Load participant ERP data
+-dans matlab correspond : 
+csvwrite('RewP_Waveforms_AllPs.csv',[squeeze(All_ERP(26,:,1,:)),squeeze(All_ERP(26,:,2,:))]'); %Export data. Conditions: Loss, Win. Electrode 26 is FCz.
+
+convertir point en temps
+
+temps=-200+((pt-1)x2)
