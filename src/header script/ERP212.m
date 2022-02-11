@@ -11,22 +11,9 @@ addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-preProcessing
 addpath(genpath('/home/StageEEGpre/dependencies/article/MATLAB-EEG-timeFrequencyAnalysis-master'))
 
 
-% addpath('/home/StageEEGpre/dependencies/eeglab_current/eeglab2021.1')
 
 addpath(genpath('/home/dependencies/eeglab_current/eeglab2021.1'))
 
 
-% folder = fileparts(which('/home/StageEEGpre'))
-% addpath(genpath(folder));
-% folder2 = fileparts(which('/home/dependencies/eeglab_current/')); 
-% addpath(genpath(folder2));
-% 
-% addpath('/home/StageEEGpre/src/eeglabcode/vdhrfiles/')
-% 
-% 
-% 
-% %addpath(genpath('/home/StageEEGpre'));
-% rmpath(genpath('/home/StageEEGpre/dependencies/eeglab_current/'));
-% rmpath('/home/StageEEGpre/dependencies/fieldtrip-lite-20211020');
 
 copiemod2411

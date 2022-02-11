@@ -76,7 +76,7 @@ colnames(dataCW) = c("Time", "Gain", "Loss") #Rename columns
 FreqCW = melt(dataCW, id = "Time", measured = c("Gain", "Loss")) #Transform data into long format
 FreqCW$CI = c(data[,5],data[,6]) #Attach 95% confidence intervals
 colnames(FreqCW) = c("Time", "Condition", "Amplitude","CI") #Rename columns
-ylimcw = range(-5.5,15) #Determine y limits
+ylimcw = range(-5.5,20) #Determine y limits
 ylabcw = expression(paste("Voltage (", mu, "V)", sep ="")) #Amplitude (μV) #Determine y label title
 xlabcw = "Time (ms)" #Determine x label title
 
