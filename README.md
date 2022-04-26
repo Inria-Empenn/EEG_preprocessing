@@ -43,3 +43,5 @@ We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/fi
 
 1. Format the dataset using BIDS so that it can be recognized by automagic
 2. Run the analysis with [script25janv.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/automagic/janvier/script25janv.m) Note: this code is not ready-to-use yet but includes importing the data and creating a project, the pipeline is to be updated to match the paper as well as the intiatization of the project.
+
+Test Aya
