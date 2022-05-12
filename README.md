@@ -37,7 +37,7 @@ We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/fi
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
-### Using automagic and the raw datasets (work-in-progress)
+### Using Brainstorm and the raw datasets (work-in-progress)
 
-1. Format the dataset using BIDS so that it can be recognized by automagic
-2. Run the analysis with [script25janv.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/automagic/janvier/script25janv.m) Note: this code is not ready-to-use yet but includes importing the data and creating a project, the pipeline is to be updated to match the paper as well as the intiatization of the project.
+1. Convert the dataset into BIDS  or set using the following functions: XX that it can be recognized by BS
+2. Run the analysis with XXX
