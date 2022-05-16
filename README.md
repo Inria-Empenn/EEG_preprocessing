@@ -37,7 +37,7 @@ We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/fi
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
-### Using Brainstorm and the raw datasets (work-in-progress)
+### Using Brainstorm and the raw datasets
 
-1. Convert the dataset into BIDS  or set using the following functions: XX that it can be recognized by BS
-2. Run the analysis with XXX
+1. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m)  so that it can be recognized by BS
+2. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). Note: the paths should be changed 
