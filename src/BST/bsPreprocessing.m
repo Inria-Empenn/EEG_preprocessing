@@ -1,5 +1,9 @@
 % ======= CREATE PROTOCOL =======
 % The protocol name has to be a valid folder name (no spaces, no weird characters...)
+
+todir='/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1';
+BS_db='/Users/ayakabbara/Documents/brainstorm_db/';
+
 ProtocolName = 'Protocol_PreProc';
 % Start brainstorm without the GUI
 if ~brainstorm('status')
@@ -10,7 +14,7 @@ gui_brainstorm('DeleteProtocol', ProtocolName);
 % Create new protocol
 gui_brainstorm('CreateProtocol', ProtocolName, 0, 0);
 
-cd('/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1'); %Find and change working folder to raw EEG data
+cd(todir); %Find and change working folder to raw EEG data
 filenames = dir('*.vhdr')
 nb=500;
 
@@ -20,7 +24,7 @@ for participant = 1:nb %Cycle through participants
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
 
-RawFile = fullfile('/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1/set',['set_' participant_number{2} '.set']);
+RawFile = fullfile([todir '/set'],['set_' participant_number{2} '.set']);
 SubjectName = ['participant_' participant_number{2}];
 
 
@@ -42,8 +46,6 @@ sFiles = bst_process('CallProcess', 'process_import_data_raw', [], [], ...
 
 
 % % Input files
-% sFiles = {...
-%     'Subject01/@rawNDARAA075AMK/data_0raw_NDARAA075AMK.mat'};
 
 % % Start a new report
 bst_report('Start', sFiles);
@@ -147,7 +149,6 @@ All_ERP_BS(1,:,:,participant) = FF.F; %Store all the ERP data into a single vari
 catch
 %     rem_part(end+1)=participant;
 end
-BS_db='/Users/ayakabbara/Documents/brainstorm_db/';
 try
 dirr=[BS_db ProtocolName '/data/' sFilesAvg(2).FileName];
 FF=load(dirr);
