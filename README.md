@@ -18,28 +18,26 @@ telecharger https://osf.io/ztw8u/ ChanlocsMaster.mat et l'ajouter dans le dossie
 
 ### Using the code provided with the paper and the preprocessed datasets
 
-2. Run the analysis and create the intermediatary file that processes the subject results to estimate the means etc [RewardProcessing_Plots.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/plot/RewardProcessing_Plots.m). 
-3. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). 
+1. Run the analysis and create the intermediatary file that processes the subject results to estimate the means etc [RewardProcessing_Plots.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/plot/RewardProcessing_Plots.m). 
+2. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). 
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/preprocessed100.png)
 
 ### Using the code provided with the paper and the raw datasets (without ICA manual)
 
 1. Add path to dependencies with [demarragemaison.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/header%20script/demarragemaison.m). Note: this file has to be edited to include your own pathes.
-3. Run the analysis and create the intermediatary file that processes the subject results to estimate the means etc [sansICA75.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/article/sansICA75.m). Note: this file has to be edited to include your own pathes and [at this line](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/article/sansICA75.m#L78) update the number of subjects to be included.
-4. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). Note: the number of participants has to be updated to the number of participants included.
+2. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). Note: the number of participants has to be updated to the number of participants included.
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/noica73.png)
 
 ### Using EEGlab and the raw datasets
 
-3. Run the analysis [version100sujets.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/janvier/100%20sujets/version100sujets.m). Note: this file has to be edited to include your own pathes and [at these lines](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/janvier/100%20sujets/version100sujets.m#L20-L21) update the number of subjects to be included.
-4. Create the intermediary file with [variablespourfig1.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/janvier/figure1/variablespourfig1.m)
-5. Create the figures using the R script [fig2Av2.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/codeR/fig2Av2.R). Note: the number of participants has to be updated to the number of participants included.
+1. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
+2. Create the figures using the R script [fig2Av2.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/codeR/fig2Av2.R). Note: the number of participants has to be updated to the number of participants included, the name of csv files should be changed accordingly.
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
-### Using automagic and the raw datasets (work-in-progress)
+### Using Brainstorm and the raw datasets
 
-1. Format the dataset using BIDS so that it can be recognized by automagic
-2. Run the analysis with [script25janv.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/automagic/janvier/script25janv.m) Note: this code is not ready-to-use yet but includes importing the data and creating a project, the pipeline is to be updated to match the paper as well as the intiatization of the project.
+1. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m)  so that it can be recognized by BS
+2. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). Note: the paths should be changed 

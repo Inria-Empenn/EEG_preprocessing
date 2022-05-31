@@ -7,3 +7,4 @@ data/*
 dependencies/*
 *.asv
 results/*
+*.DS_Store
