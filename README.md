@@ -62,8 +62,11 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
 
 - FieldTrip script: This script uses FieldTrip functions available at https://www.fieldtriptoolbox.org/download/
 
+## Reproducing the results
 
-## Reproducing Figure 2A using the reference script of (Williams et al, 2021)
+### Reproducing Figure 2
+
+#### Reproducing Figure 2A using the reference script of (Williams et al, 2021)
 
 > We used the same preprocessing code provided by the original paper, by eliminating the step of manual ICA employed to detect the arttifactual components related to eye blinks
 
@@ -74,14 +77,14 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
 
 We obtain XX [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/noica73.png)
 
-### Using EEGlab and the raw datasets
+#### Reproducing Figure 2A using EEGLAB
 
 1. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
 2. Create the figures using the R script [fig2Av2.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/codeR/fig2Av2.R). Note: the number of participants has to be updated to the number of participants included, the name of csv files should be changed accordingly.
 
 We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
-### Using Brainstorm and the raw datasets
+#### Reproducing Figure 2A using Brainstorm
 
 1. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m)  so that it can be recognized by BS
 2. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). Note: the paths should be changed 
