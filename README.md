@@ -56,27 +56,23 @@ https://github.com/Neuro-Tools/MATLAB-EEG-fileIO
 https://github.com/Neuro-Tools/MATLAB-EEG-timeFrequencyAnalysis
 https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
 
-- EEGLAB script : https://sccn.ucsd.edu/eeglab/download.php  eeglab current version
-- Brainstorm script : 
+- EEGLAB script : This script uses EEGLAB functions available at  https://sccn.ucsd.edu/eeglab/download.php  eeglab current version
 
-- FieldTrip script:
+- Brainstorm script : This script uses Brainstorm functions available at https://neuroimage.usc.edu/bst/download.php
+
+- FieldTrip script: This script uses FieldTrip functions available at https://www.fieldtriptoolbox.org/download/
 
 
-## Reproducing Fig 2A of (Williams et al, 2021)
+## Reproducing Figure 2A using the reference script of (Williams et al, 2021)
 
-### Using the code provided with the paper and the preprocessed datasets
+> We used the same preprocessing code provided by the original paper, by eliminating the step of manual ICA employed to detect the arttifactual components related to eye blinks
 
-1. Run the analysis and create the intermediatary file that processes the subject results to estimate the means etc [RewardProcessing_Plots.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/eeglabcode/plot/RewardProcessing_Plots.m). 
-2. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). 
+1. Add path to dependencies already cited using
+    addpath(genpath('dependencyDir'))
+2. Run the script [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). 
+3. Create the figure using the R script XX
 
-We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/preprocessed100.png)
-
-### Using the code provided with the paper and the raw datasets (without ICA manual)
-
-1. Add path to dependencies with [demarragemaison.m](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/header%20script/demarragemaison.m). Note: this file has to be edited to include your own pathes.
-2. Create the figures using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R). Note: the number of participants has to be updated to the number of participants included.
-
-We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/noica73.png)
+We obtain XX [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/noica73.png)
 
 ### Using EEGlab and the raw datasets
 
