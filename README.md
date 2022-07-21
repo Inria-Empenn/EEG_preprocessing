@@ -6,11 +6,10 @@ Nina Forde
 Camille Maumet
 Mahmoud Hassan
 
-> This is a guide for researchers to reproduce the results and figures published in the paper
+> This is a guide for researchers to reproduce the results and figures published in the paper "Successful reproduction of a large EEG study across software packages".
+>This paper has been submitted for publication in NeuroImage Reports.
 
-This paper has been submitted for publication in NeuroImage Reports.
-
-> This study sheds light on how the software tool used to preprocess EEG signals impacts the analysis results and conclusions. EEGLAB, Brainstorm and FieldTrip were used to reproduce the same preprocessing pipeline of a published EEG study performed on 500 participants.
+This study sheds light on how the software tool used to preprocess EEG signals impacts the analysis results and conclusions. EEGLAB, Brainstorm and FieldTrip were used to reproduce the same preprocessing pipeline of a published EEG study performed on 500 participants.
 
 ![](figures/figure1_preprocess.001.jpeg)
 
@@ -19,7 +18,7 @@ This paper has been submitted for publication in NeuroImage Reports.
 
 ## Abstract
 
-> As an active field of research, Electroencephalography (EEG) analysis workflow has increasing flexibility and complexity, with a great variety of methodological options and tools to be selected at each step. This high analytical flexibility can be problematic as it can yield variability in research outcomes. Therefore, growing attention has been recently paid to understand the potential of different methodological decisions to influence the reproducibility of results. In this paper, we aim to examine how sensitive the results of EEG analyses are to variations in software tools. We reanalyzed shared EEG data (N=500) previously used in a published task EEG study using three of the most commonly used software tools: EEGLAB, Brainstorm and FieldTrip. After reproducing the same original preprocessing workflow in each software, the resultant evoked-related potentials (ERPs) were qualitatively and quantitatively compared in order to examine the degree of consistency/discrepancy between softwares. Our findings show a good degree of convergence in terms of the general profile of ERP waveforms, peak latencies and effect size estimates related to specific signal features. However, considerable variability was also observed between software packages as reflected by the similarity values and observed statistical differences at particular channels and time instants. In conclusion, we believe that this study provides valuable clues to better understand the impact of the software tool on analysis results of EEG.
+As an active field of research, Electroencephalography (EEG) analysis workflow has increasing flexibility and complexity, with a great variety of methodological options and tools to be selected at each step. This high analytical flexibility can be problematic as it can yield variability in research outcomes. Therefore, growing attention has been recently paid to understand the potential of different methodological decisions to influence the reproducibility of results. In this paper, we aim to examine how sensitive the results of EEG analyses are to variations in software tools. We reanalyzed shared EEG data (N=500) previously used in a published task EEG study using three of the most commonly used software tools: EEGLAB, Brainstorm and FieldTrip. After reproducing the same original preprocessing workflow in each software, the resultant evoked-related potentials (ERPs) were qualitatively and quantitatively compared in order to examine the degree of consistency/discrepancy between softwares. Our findings show a good degree of convergence in terms of the general profile of ERP waveforms, peak latencies and effect size estimates related to specific signal features. However, considerable variability was also observed between software packages as reflected by the similarity values and observed statistical differences at particular channels and time instants. In conclusion, we believe that this study provides valuable clues to better understand the impact of the software tool on analysis results of EEG.
 
 
 
