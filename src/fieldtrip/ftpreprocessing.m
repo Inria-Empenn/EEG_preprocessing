@@ -1,19 +1,23 @@
-% %  load channel list
-load('/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1/set/Subject001/channelsTokeep.mat');
+% %  --- This is the preprocessing workflow reproduced by FieldTrip functions---
+% % For contact: aya.kabbara7@gmail.com
+
+% %  Regulate some parameters that will be used in interpolation
+load('src/channelsTokeep.mat');
+
 % % prepare neighborhood template for bad channels interpolation
 reduced_subjects=ss;
 cfg = [];
-cfg.dataset = '/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1/set/Subject001/set_001.set';
+cfg.dataset = '/Raw Data Part 1/set/Subject001/set_001.set';
 cfg.continuous  = 'yes';              % force it to be continuous
-cfg.channel     = ChannelsTokeep;                     
+cfg.channel     = ChannelsTokeep;
 data_prepare  = ft_preprocessing(cfg);
 cfg=[];
 cfg.method ='distance';
 cfg.neighbourdist=0.7;
 [neighbours, cfg] = ft_prepare_neighbours(cfg, data_prepare)
 
-% % go to folder
-cd('/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1'); %Find and change working folder to raw EEG data
+% % go to data folder
+cd('/Raw Data Part 1'); %Find and change working folder to raw EEG data
 filenames = dir('*.vhdr')
 nb=500;
 trials_loss=[];
@@ -25,7 +29,7 @@ for participant =1:500 %Cycle through participants
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
 
-    RawFile = ['/Users/ayakabbara/Desktop/projects/EEG_PreProcessing/Raw Data Part 1/set/Subject' participant_number{2} '/set_' participant_number{2} '.set'];
+    RawFile = ['/Raw Data Part 1/set/Subject' participant_number{2} '/set_' participant_number{2} '.set'];
     SubjectName = ['participant_' participant_number{2}];
 
 %     % Check if the folder contains the required files
@@ -35,15 +39,15 @@ for participant =1:500 %Cycle through participants
     % % read data
     cfg = [];
     cfg.dataset = RawFile;
-    cfg.continuous  = 'yes';  
+    cfg.continuous  = 'yes';
     
     % force it to be continuous
     if(length(find(reduced_subjects==participant))==0)
-        cfg.channel     = ChannelsTokeep;  
+        cfg.channel     = ChannelsTokeep;
     end
     % % re-referencing
     cfg.reref       = 'yes';
-    cfg.refchannel  = {'TP9', 'TP10'}; 
+    cfg.refchannel  = {'TP9', 'TP10'};
     
     data_eeg    = ft_preprocessing(cfg);
 
@@ -91,7 +95,7 @@ for participant =1:500 %Cycle through participants
     try
     [data_interp] = ft_channelrepair(cfg, data_eeg_filtered)
 
-    % % define trials, segment 
+    % % define trials, segment
     cfg = [];
     cfg.dataset= RawFile;
     cfg.trialdef.eventtype = 'Stimulus';
@@ -151,18 +155,34 @@ for participant =1:500 %Cycle through participants
     try
     [timelock] = ft_timelockanalysis(cfg, data_loss_final);
     trials_loss(participant)=length(data_loss_final.trial);
-    All_ERP_ft(1,:,:,participant) = timelock.avg; 
+    All_ERP_ft(1,:,:,participant) = timelock.avg;
     catch
     end
     
     try
     [timelock] = ft_timelockanalysis(cfg, data_win_final);
     trials_win(participant)=length(data_win_final.trial);
-    All_ERP_ft(2,:,:,participant) = timelock.avg; 
+    All_ERP_ft(2,:,:,participant) = timelock.avg;
     catch
     end
     catch
     end
 end
 
- save('All_ERP_ft_final.mat','All_ERP_ft');
+ save('All_ERP_ft.mat','All_ERP_ft');
+channelOfInterest=26;
+
+All_ERP_ft=All_ERP_ft(:,:,151:750,:);
+% %% RewP_Waveforms_AllPs
+tt1=squeeze(All_ERP_ft(1,26,:,:));
+tt2=squeeze(All_ERP_ft(2,26,:,:));
+
+csvwrite('ft_RewP_Waveforms_final22.csv',[(-200:2:998)',nanmean(squeeze(All_ERP_ft(1,26,:,:)),2),nanmean(squeeze(All_ERP_ft(2,26,:,:)),2),nanmean(squeeze(All_ERP_ft(1,26,:,:)),2)-nanmean(squeeze(All_ERP_ft(2,26,:,:)),2)]); %Export data. Conditions: Time, Loss, Win, Difference. Electrode 26 is FCz.
+
+csvwrite('ft_RewP_Waveforms_AllPs_final22.csv',[tt1,tt2]'); %Export data. Conditions: Loss, Win. Electrode 26 is FCz.
+% % %% RewP_Latency
+%
+[~,peak_loc] = max(squeeze(All_ERP_ft(1,26,226:276,:))-squeeze(All_ERP_ft(2,26,226:276,:))); %Determine where the peak amplitude is for each participant. Electrode 26 is FCz.
+peak_loc = (((peak_loc+225)*2)-200)/1000; %Convert into seconds
+csvwrite('ft_RewP_Latency_final22.csv',peak_loc'); %Export data
+
