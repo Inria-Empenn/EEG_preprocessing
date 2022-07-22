@@ -53,9 +53,9 @@ or [download a zip archive](https://github.com/AyaKabbara/StageEEGpre/archive/ma
 
 ## Dependencies
 - Reference script: To re-run the script of the reference paper,  one should first download the Neuro-Tools package from https://github.com/Neuro-Tools/ including https://github.com/Neuro-Tools/MATLAB-EEG-preProcessing
-https://github.com/Neuro-Tools/MATLAB-EEG-fileIO
-https://github.com/Neuro-Tools/MATLAB-EEG-timeFrequencyAnalysis
-https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
+https://github.com/Neuro-Tools/MATLAB-EEG-fileIO,
+https://github.com/Neuro-Tools/MATLAB-EEG-timeFrequencyAnalysis,
+https://github.com/Neuro-Tools/MATLAB-EEG-icaTools.
 
 - EEGLAB script : This script uses EEGLAB functions available at  https://sccn.ucsd.edu/eeglab/download.php  eeglab current version
 
@@ -87,7 +87,6 @@ Note:  The name of csv files should be changed accordingly.
 2. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
 3. Create figures 2B,3B and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
-We obtain these figures [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
 ### Reproducing Figure 2C,Figure 3C using Brainstorm
 
@@ -112,6 +111,15 @@ We obtain these figures [this figure](https://github.com/Inria-Empenn/StageEEGpr
 ### Reproducing Figure 4
 
 1. Prepare the csv files containing the feature to be plotted using [fig4_preparation.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/fig4_preparation.m). This script calls the function [extract_features.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/extract_features.m). 
-2. Run the script [Fig4.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig4.py)
+2. Create the figure using [Fig4.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig4.py)
 
 ### Reproducing Figure 5
+
+1. Generate the similarity matrix (for both conditions) using the function [similarity_calc.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/similarity_calc.m)
+2. Create the figure using [Fig5.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig5.py)
+
+### Reproducing Figure 6
+
+Create Figure 6.A using [eeglab_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_stats.m), Figure 6.B using [bs_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bs_stats.m) and Figure 6.C using [ft_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/fieldtrip/ft_stats.m)
+
+
