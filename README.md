@@ -1,10 +1,11 @@
 # Successful reproduction of a large EEG study across software packages
 
 by
-Aya Kabbara
-Nina Forde
-Camille Maumet
-Mahmoud Hassan
+Aya Kabbara,
+Nina Forde,
+Camille Maumet,
+Mahmoud Hassan.
+Contact: aya.kabbara7@gmail.com
 
 > This is a guide for researchers to reproduce the results and figures published in the paper "Successful reproduction of a large EEG study across software packages".
 >This paper has been submitted for publication in NeuroImage Reports.
@@ -107,3 +108,10 @@ We obtain these figures [this figure](https://github.com/Inria-Empenn/StageEEGpr
 
 2. Run the analysis with [ftPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/ftPreprocessing.m). 
 3. Create  figures 2D,3D and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
+
+### Reproducing Figure 4
+
+1. Prepare the csv files containing the feature to be plotted using [fig4_preparation.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/fig4_preparation.m). This script calls the function [extract_features.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/extract_features.m). 
+2. Run the script [Fig4.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig4.py)
+
+### Reproducing Figure 5
