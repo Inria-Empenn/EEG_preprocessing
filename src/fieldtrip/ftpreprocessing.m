@@ -184,5 +184,5 @@ csvwrite('ft_RewP_Waveforms_AllPs_final22.csv',[tt1,tt2]'); %Export data. Condit
 %
 [~,peak_loc] = max(squeeze(All_ERP_ft(1,26,226:276,:))-squeeze(All_ERP_ft(2,26,226:276,:))); %Determine where the peak amplitude is for each participant. Electrode 26 is FCz.
 peak_loc = (((peak_loc+225)*2)-200)/1000; %Convert into seconds
-csvwrite('ft_RewP_Latency_final22.csv',peak_loc'); %Export data
+csvwrite('ft_RewP_Latency.csv',peak_loc'); %Export data
 
