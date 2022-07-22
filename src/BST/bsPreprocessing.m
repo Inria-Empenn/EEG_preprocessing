@@ -170,7 +170,7 @@ for participant =1:nb %Cycle through participants
     % bst_process('CallProcess', 'process_delete','subjectname',    SubjectName)
 end
 
-save('AllERP_BS','All_ERP_BS');
+save('All_ERP_BS','All_ERP_BS');
 
 All_ERP=All_ERP(:,:,151:750,:).*1000000; % the unit in BS is in microVolts so it should be transfomed
 channelOfInterest=26;
