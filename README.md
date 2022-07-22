@@ -52,9 +52,9 @@ You can download a copy of all the files in this repository by cloning the
 or [download a zip archive](https://github.com/AyaKabbara/StageEEGpre/archive/master.zip).
 
 ## Dependencies
-- Reference script: To re-run the script of the reference paper,  one should first download the Neuro-Tools package from https://github.com/Neuro-Tools/ including https://github.com/Neuro-Tools/MATLAB-EEG-preProcessing
-https://github.com/Neuro-Tools/MATLAB-EEG-fileIO,
-https://github.com/Neuro-Tools/MATLAB-EEG-timeFrequencyAnalysis,
+- Reference script: To re-run the script of the reference paper,  one should first download the Neuro-Tools package from https://github.com/Neuro-Tools/ including https://github.com/Neuro-Tools/MATLAB-EEG-preProcessing, 
+https://github.com/Neuro-Tools/MATLAB-EEG-fileIO ,
+https://github.com/Neuro-Tools/MATLAB-EEG-timeFrequencyAnalysis ,
 https://github.com/Neuro-Tools/MATLAB-EEG-icaTools.
 
 - EEGLAB script : This script uses EEGLAB functions available at  https://sccn.ucsd.edu/eeglab/download.php  eeglab current version
@@ -73,7 +73,7 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools.
 ```
     addpath(genpath('dependencyDir'))
 ```
-2. Run the analysis with [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will save the erp of all participants in a .mat file. It will also generate the csv files to be used for plotting figures 2,3 and for the calculation of descriptive statistics. 
+2. Run the analysis with [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will store the ERPs of all participants in a .mat file. It will also generate the csv files to be used for plotting the figures and the calculation of the descriptive statistics. 
 3. Create figures 2A,3A and generate the related values in tables 1,2 using the following R script: [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).
 Note:  The name of csv files should be changed accordingly.
 
