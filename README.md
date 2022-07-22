@@ -38,8 +38,8 @@ See the `README.md` files in each directory for a full description.
 
 ## Getting the data
 
-Download data from https://osf.io/qrs4h/ and store it ./data directory. 
-The channel location file should be also downloaded from https://osf.io/ztw8u/ ChanlocsMaster.mat, and stored in ./data folder. 
+Download data from https://osf.io/qrs4h/ and store it `data` directory. 
+The channel location file should be also downloaded from https://osf.io/ztw8u/ ChanlocsMaster.mat, and stored in `data` folder. 
 
 ## Getting the code
 
@@ -64,20 +64,21 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
 
 ## Reproducing the results
 
-### Reproducing Figure 2
+### Reproducing Figures
 
-#### Reproducing Figure 2A using the reference script of (Williams et al, 2021)
+#### Reproducing Figure 2A, Figure 3A  using the reference script of (Williams et al, 2021)
 
 > We used the same preprocessing code provided by the original paper, by eliminating the step of manual ICA employed to detect the arttifactual components related to eye blinks
 
-1. Add path to dependencies already cited using
+1. Add path to dependencies already cited using:
+```
     addpath(genpath('dependencyDir'))
-2. Run the script [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). 
-3. Create the figure using the R script XX
+```
+2. Run the script [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will save the erp of all participants in a .mat file. It will also generate the csv files to be used for plotting figures 2,3 and for the calculation of descriptive statistics. 
+3. Create figures and tables using the following R script: [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).
+Note:  The name of csv files should be changed accordingly.
 
-We obtain XX [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/noica73.png)
-
-#### Reproducing Figure 2A using EEGLAB
+####  Reproducing Figure 2A, Figure 3A using EEGLAB
 
 1. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
 2. Create the figures using the R script [fig2Av2.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/codeR/fig2Av2.R). Note: the number of participants has to be updated to the number of participants included, the name of csv files should be changed accordingly.
