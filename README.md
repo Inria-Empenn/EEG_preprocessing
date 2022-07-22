@@ -64,28 +64,46 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools
 
 ## Reproducing the results
 
-### Reproducing Figures
-
-#### Reproducing Figure 2A, Figure 3A  using the reference script of (Williams et al, 2021)
+### Reproducing Figure 2A, Figure 3A  using the reference script of (Williams et al, 2021)
 
 > We used the same preprocessing code provided by the original paper, by eliminating the step of manual ICA employed to detect the arttifactual components related to eye blinks
 
-1. Add path to dependencies already cited using:
+1. Add path to corresponding dependencies listed above using:
 ```
     addpath(genpath('dependencyDir'))
 ```
-2. Run the script [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will save the erp of all participants in a .mat file. It will also generate the csv files to be used for plotting figures 2,3 and for the calculation of descriptive statistics. 
-3. Create figures and tables using the following R script: [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).
+2. Run the analysis with [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will save the erp of all participants in a .mat file. It will also generate the csv files to be used for plotting figures 2,3 and for the calculation of descriptive statistics. 
+3. Create figures 2A,3A and generate the related values in tables 1,2 using the following R script: [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).
 Note:  The name of csv files should be changed accordingly.
 
-####  Reproducing Figure 2A, Figure 3A using EEGLAB
+###  Reproducing Figure 2B, Figure 3B using EEGLAB
 
-1. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
-2. Create the figures using the R script [fig2Av2.R](https://github.com/Inria-Empenn/StageEEGpre/blob/main/src/codeR/fig2Av2.R). Note: the number of participants has to be updated to the number of participants included, the name of csv files should be changed accordingly.
+1. Add path to corresponding dependencies listed above using:
+```
+    addpath(genpath('dependencyDir'))
+```
 
-We obtain [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
+2. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
+3. Create figures 2B,3B and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
-#### Reproducing Figure 2A using Brainstorm
+We obtain these figures [this figure](https://github.com/Inria-Empenn/StageEEGpre/blob/main/figures/articke%20fig2/100sujetseeglabfinal.png)
 
-1. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m)  so that it can be recognized by BS
-2. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). Note: the paths should be changed 
+### Reproducing Figure 2C,Figure 3C using Brainstorm
+
+1. Add path to corresponding dependencies listed above using:
+```
+    addpath(genpath('dependencyDir'))
+```
+2. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m) 
+3. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). 
+4. Create figures 2C,3C and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
+
+### Reproducing Figure 2D,Figure 3D using FieldTrip
+
+1. Add path to corresponding dependencies listed above using:
+```
+    addpath(genpath('dependencyDir'))
+```
+
+2. Run the analysis with [ftPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/ftPreprocessing.m). 
+3. Create  figures 2D,3D and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
