@@ -43,8 +43,8 @@ orderEEglab=[8
 23];
 
 
-load('AR500_All_ERP.mat')
-load('All_ERP_eeglab500.mat')
+load('All_ERP_ref.mat')
+load('All_ERP_eeglab.mat')
 All_ERP2=All_ERP_eeglab;
 
 % re-order channs for eeglab erps
@@ -68,7 +68,7 @@ idx2 = isnan(tt2) ;
 
 % tt2(:,unique(c2))=[];
 % tt1(:,unique(c2))=[];
-% 
+%
 toberemoved=unique([unique(c1) ;unique(c2); unique(c3); unique(c4)]);
 tKept1=[];tKept2=[];
 kept_eeglab=[];
@@ -134,18 +134,18 @@ timeToPlot=-200:2:1000;
 tt=-200:200:1000;
 
 if(condition==1)
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
         1 0 0
         0 1 0
         0 0 1
-        213/255 23/255 0];
+        66/255 66/255 66/255];
     gain_btw(1,2)=length(find(StatDiff));
 else
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
     1 0 0
     0 1 0
     0 0 1
-    129/255 183/255 216/255];
+    66/255 66/255 66/255];
     loss_btw(1,2)=length(find(StatDiff));
 
 end
@@ -243,11 +243,11 @@ timeToPlot=-200:2:1000;
 tt=-200:100:1000;
 
 ax(3)=subplot(2,3,3)
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
     1 0 0
     0 1 0
     0 0 1
-    242/255 125/255 82/255];
+    66/255 66/255 66/255];
 
 imagesc(StatDiff)
 colormap(ax(3),mymap)

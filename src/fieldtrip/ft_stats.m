@@ -9,10 +9,10 @@ P_Bonf=0.01/nbchan/nbpt;
 
 StatDiff=zeros(nbchan,nbpt);
 
-load('All_ERP_ft_final2.mat')
+load('All_ERP_ft.mat')
 All_ERP2=All_ERP_ft;
 
-load('AR500_All_ERP.mat')
+load('All_ERP_ref.mat')
 
 
 All_ERP=All_ERP(:,151:750,:,:);
@@ -34,7 +34,7 @@ idx2 = isnan(tt2) ;
 
 % tt2(:,unique(c2))=[];
 % tt1(:,unique(c2))=[];
-% 
+%
 toberemoved=unique([unique(c1) ;unique(c2); unique(c3); unique(c4)]);
 tKept1=[];tKept2=[];
 kept_ft=[];
@@ -48,7 +48,7 @@ for su=1:500
     end
 end
 
-% % 
+% %
 All_ERP2=All_ERP2(:,:,151:750,kept_ft);
 
 
@@ -102,19 +102,19 @@ timeToPlot=-200:2:1000;
 tt=-200:200:1000;
 
 if(condition==1)
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
         1 0 0
         0 1 0
         0 0 1
-        213/255 23/255 0];
+        66/255 66/255 66/255];
         gain_btw(1,4)=length(find(StatDiff));
 
 else
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
     1 0 0
     0 1 0
     0 0 1
-    129/255 183/255 216/255];
+    66/255 66/255 66/255];
     loss_btw(1,4)=length(find(StatDiff));
 
 
@@ -212,11 +212,11 @@ timeToPlot=-200:2:1000;
 tt=-200:100:1000;
 
 ax(3)=subplot(2,3,3)
-    mymap = [0.8 0.8 0.8
-    0.8 0.8 0.8
-   0.8 0.8 0.8
-    0.8 0.8 0.8
-    242/255 125/255 82/255];
+    mymap = [234/255 234/255 234/255
+    234/255 234/255 234/255
+   234/255 234/255 234/255
+    234/255 234/255 234/255
+    66/255 66/255 66/255];
 diff_btw(1,4)=length(find(StatDiff));
 
 imagesc(StatDiff)
