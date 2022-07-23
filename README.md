@@ -23,8 +23,7 @@ As an active field of research, Electroencephalography (EEG) analysis workflow h
 
 ## Software implementation
 
-> In each software, the preprocessing script includes the reduction to 32 electrodes, the re-referencing, the automatic detection of bad electrodes, the band-pass filtering, the interpolation of bad channels, the segmentation into time-locked epochs and the removal of artifactual trials.Briefly describe the software that was written to produce the results of this
-> paper.
+> In each software, the preprocessing script includes the reduction to 32 electrodes, the re-referencing, the automatic detection of bad electrodes, the band-pass filtering, the interpolation of bad channels, the segmentation into time-locked epochs and the removal of artifactual trials.
 
 
 All the preprocessing codes were written in Matlab (Matlab R2019a). The visualizations of ERP waveforms (Figure 2) and the quantitative features (Figure 3) were done in R (R Core Team 2020). Seaborn (Waskom 2021) was used to illustrate the comparison between the software distribution of the quantitative measures (Figure 4), and the similarity matrix between softwares (Figure 5). Other visualizations and statistical assessments were conducted using Matlab. 
