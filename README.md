@@ -46,7 +46,7 @@ The channel location file should be also downloaded from https://osf.io/ztw8u/ C
 You can download a copy of all the files in this repository by cloning the
 [git](https://git-scm.com/) repository:
 
-    git clone https://github.com/AyaKabbara/StageEEGpre.git
+    git clone https://github.com/AyaKabbara/EEG_preprocessing
 
 or [download a zip archive](https://github.com/AyaKabbara/StageEEGpre/archive/master.zip).
 
