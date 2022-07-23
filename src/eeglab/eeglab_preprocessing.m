@@ -2,8 +2,9 @@
 % %  --- This is the preprocessing workflow reproduced by EEGLAB functions---
 % % For contact: aya.kabbara7@gmail.com
 
-%%  1st pass: detect bad electrodes using clean_artifacts
  cd('/Raw Data'); %Find and change working folder to raw EEG data
+
+%% === 1st pass: Detect bad channels ====
 
 filenames = dir('*.vhdr')
 nb=500;
@@ -17,7 +18,7 @@ for participant = 1:nb %Cycle through participants
     % add the channel location file
     EEG=pop_chanedit(EEG, 'lookup','/eeglab2021.1/functions/supportfiles/Standard-10-20-Cap81.ced');
 
-    % % passer à 32 channels: use the eeglab function
+    % % reduce into 32 channels
      
     try
         if(EEG.nbchan > 32)
@@ -63,10 +64,11 @@ EEG = pop_eegfiltnew(EEG, 'locutoff',0.1,'hicutoff',30);
 [eeg2,HP,BUR,removed_channels] = clean_artifacts(EEG);
 rm_channels{participant}=find(removed_channels);
 end
-% save the detected bad channels
+%% === Save the detected bad channels ====
 save('eeglab_removedchans500','rm_channels');
 
-% % 2nd pass: pre-process signals using the same paper's pipeline
+%% === 2nd pass: process data ====
+
 clear all;
 clc;
 load('eeglab_removedchans500');
@@ -78,13 +80,16 @@ for participant = 1:nb %Cycle through participants
     %Get participant name information
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
+
+    %% === Read data ====
+
     EEG = pop_loadbv('/Raw Data Part 1/', filenames(participant).name);
     
-    %% add the chanlocation file
+    %% === Add the channel location file ====
     EEG=pop_chanedit(EEG, 'lookup','/eeglab2021.1/functions/supportfiles/Standard-10-20-Cap81.ced');
 
-    %% reduce to 32 channels
-   
+    %% === reduce into 32 channels ====
+
     try
       if(EEG.nbchan > 32)
     EEG = pop_select(EEG, 'channel',{'Fp1'
@@ -120,23 +125,27 @@ for participant = 1:nb %Cycle through participants
     'TP9'});
       end
       
-    %% interpolate the detected bad channels
+    %% === Interpolate bad channels ====
     EEG = pop_interp(EEG, rm_channels{participant}, 'spherical');
     
-    %% re-reference
+    %% === Re-referencing ====
     EEG=pop_chanedit(EEG, 'seteeglab',{'1:31','TP10 TP9'});
     EEG = pop_reref( EEG ,{'TP9','TP10'});
 
 
-    %% filter signals
+    %% === Filtering ====
     EEG = pop_eegfiltnew(EEG, 'locutoff',0.1,'hicutoff',30);
 
-    %% segment data
+    %% === Segmentation ====
     markers = {'S110','S111'}; %Loss, win
     [EEG] = doSegmentData(EEG,markers,[-500 1298]); %Segment Data (S110 = Loss, S111 = Win). The segment window of interest is -200 to 1000ms, and we here add 300 ms before and after this because time-frequency edge artifacts (this is different than the first pass because we were being more conservative then)
+
+    %% === Baseline adjustment ====
+
     EEG = pop_rmbase( EEG, [-200/1000,0]);
+
     try
-%%         trials removal
+    %% === Bad trial identification and removal ====
         EEG = pop_eegthresh(EEG,1,[1:29] ,-50,50,-0.2,1.2,0,1);
         %ERP
         [EEG.ERP] = doERP(EEG,markers,0); %Conduct ERP Analyses
@@ -154,7 +163,7 @@ for participant = 1:nb %Cycle through participants
     end
 end
 
-%% save outputs
+%% === Save variables and csv files ====
 
 save('All_ERP_eeglab', 'All_ERP_eeglab'); %Save ERP Data
 

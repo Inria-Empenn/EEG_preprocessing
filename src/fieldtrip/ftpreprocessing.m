@@ -1,10 +1,11 @@
 % %  --- This is the preprocessing workflow reproduced by FieldTrip functions---
 % % For contact: aya.kabbara7@gmail.com
 
-% %  Regulate some parameters that will be used in interpolation
+%% === Regulate some parameters that will be used in interpolation ====
+
 load('src/channelsTokeep.mat');
 
-% % prepare neighborhood template for bad channels interpolation
+% prepare neighborhood template for bad channels interpolation
 reduced_subjects=ss;
 cfg = [];
 cfg.dataset = '/Raw Data Part 1/set/Subject001/set_001.set';
@@ -23,6 +24,8 @@ nb=500;
 trials_loss=[];
 trials_win=[];
 
+%% === Start ====
+
 for participant =1:500 %Cycle through participants
     
 %     Get participant name information
@@ -36,7 +39,7 @@ for participant =1:500 %Cycle through participants
 %     if ~file_exist(RawFile)
 %         error(['The folder does not contain the folder from the file sample.']);
 %     end
-    % % read data
+    %% === Read data ====
     cfg = [];
     cfg.dataset = RawFile;
     cfg.continuous  = 'yes';
@@ -45,16 +48,14 @@ for participant =1:500 %Cycle through participants
     if(length(find(reduced_subjects==participant))==0)
         cfg.channel     = ChannelsTokeep;
     end
-    % % re-referencing
+    %% === Re-referencing ====
     cfg.reref       = 'yes';
     cfg.refchannel  = {'TP9', 'TP10'};
-    
     data_eeg    = ft_preprocessing(cfg);
 
-    % % REMOVE THE REF CHANNELS
+    %% === Remove the reference channels ====
     cfg=[];
-    
-    if(length(find(reduced_subjects==participant))==0)
+  if(length(find(reduced_subjects==participant))==0)
     cfg.channel     = [1:29];
     else
     cfg.channel     = [1:9 11:20 22:31];
@@ -62,15 +63,15 @@ for participant =1:500 %Cycle through participants
     
     data_eeg    = ft_preprocessing(cfg,data_eeg);
 
-    % % filtering
+    %% === Filtering ====
     cfg=[];
     cfg.bpfilter='yes';
     cfg.bpfreq=[0.1 30];
     cfg.bpfiltord=4;
     cfg.bpfilttype='but';
-    data_eeg_filtered= ft_preprocessing(cfg,data_eeg);
+    data_eeg_filtered=ft_preprocessing(cfg,data_eeg);
 
-    % % detect channels
+    %% === Detect bad channels ====
     cfg=[];
     bad_detected={};
     index_bad_detected=[];
@@ -88,14 +89,14 @@ for participant =1:500 %Cycle through participants
     end
 
 
-    % % repair bad channels
+    %% === Interpolate bad channels ====
     cfg=[];
     cfg.badchannel     = bad_detected;
     cfg.neighbours     = neighbours(index_bad_detected);
     try
     [data_interp] = ft_channelrepair(cfg, data_eeg_filtered)
 
-    % % define trials, segment
+    %% === Segmentation into time-locked epochs ====
     cfg = [];
     cfg.dataset= RawFile;
     cfg.trialdef.eventtype = 'Stimulus';
@@ -112,14 +113,16 @@ for participant =1:500 %Cycle through participants
     data_loss = ft_redefinetrial(cfg_loss, data_interp);
     data_win  = ft_redefinetrial(cfg_win, data_interp);
 
-    % % baseline correction
+    %% === Baseline correction ====
     cfg=[];
     cfg.demean        = 'yes';
     cfg.baselinewindow = [-0.2 0];
     data_loss_corrected= ft_preprocessing(cfg,data_loss);
     data_win_corrected= ft_preprocessing(cfg,data_win);
 
-    % % artifact detection for loss condition
+    %% === Bad trials identification and removal ====
+
+    %  artifact detection for loss condition
     cfg=[];
     cfg.trl=cfg_loss.trl;
     cfg.continuous = 'no';
@@ -150,7 +153,7 @@ for participant =1:500 %Cycle through participants
     data_win_final = ft_rejectartifact(cfg, data_win_corrected)
   catch
   end
-    % % calculate erp
+    %% === ERP calculation ====
     cfg=[];
     try
     [timelock] = ft_timelockanalysis(cfg, data_loss_final);
@@ -159,6 +162,7 @@ for participant =1:500 %Cycle through participants
     catch
     end
     
+
     try
     [timelock] = ft_timelockanalysis(cfg, data_win_final);
     trials_win(participant)=length(data_win_final.trial);
@@ -168,6 +172,8 @@ for participant =1:500 %Cycle through participants
     catch
     end
 end
+
+%% === Save variables and csv files ====
 
  save('All_ERP_ft.mat','All_ERP_ft');
 channelOfInterest=26;

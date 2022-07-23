@@ -47,13 +47,13 @@ for participant =1:nb %Cycle through participants
     % % Start a new report
     bst_report('Start', sFiles);
 
-     % ===== EEG REFERENCE =====
+     %% ===== EEG REFERENCE =====
            % Process: Re-reference EEG
     sFiles=bst_process('CallProcess', 'process_eegref', sFiles, [], ...
                   'eegref',      'TP9, TP10', ...
                   'sensortypes', 'EEG');
 
-     % % % ==== Bad channel identification ===
+     %%  ==== Bad channel identification ====
     sFiles=bst_process('CallProcess', 'process_import_data_time', sFiles, [], ...
           'subjectname', SubjectName, ...
         'timewindow',  []);
@@ -63,10 +63,10 @@ for participant =1:nb %Cycle through participants
         'timewindow',  [], ...
      'eeg', [10,2000],'rejectmode',1);
 
-    % % % ==== Bad channel interpolation ===
+    %% ==== Bad channel interpolation ====
     sFiles=bst_process('CallProcess', 'process_eeg_interpbad', [sFilesInterp], []);
 
-    % % ====Filtering====
+    %% ==== Filtering ====
     
     % Process: Notch filter: 50Hz 100Hz 150Hz
     sFiles = bst_process('CallProcess', 'process_notch', sFiles, [], ...
@@ -87,7 +87,7 @@ for participant =1:nb %Cycle through participants
         'mirror',      0, ...
         'read_all',    0);
 
-    %  % ===== Epoching =====
+    %% ===== Epoching =====
 
     markers = {'S110','S111'}; %Loss, win
     % toremove={'AF3','AF4','AF7','AF8','C1','C2','C5','C6','CP3','CPz','F1','F2','F5','F6','FC3','FC4','FT10','FT7','FT8','FT9','Oz','P1','P2','P5','P6','PO3','PO4','PO7','PO8','TP7','TP8','CP4'};
@@ -111,7 +111,7 @@ for participant =1:nb %Cycle through participants
       sFilesEpochs1 = bst_process('CallProcess', 'process_baseline', sFilesEpochs1, [],'baseline',    [-0.2, 0])
       sFilesEpochs2 = bst_process('CallProcess', 'process_baseline', sFilesEpochs2, [],'baseline',    [-0.2, 0])
 
-    %  % ===== Bad Trials detection =====
+    %%  ===== Bad Trials detection =====
     sFilesEpochs3=bst_process('CallProcess', 'process_detectbad', [sFilesEpochs1], [], ...
         'timewindow',  [], ...
      'eeg', [0,100],'rejectmode',2);
@@ -121,7 +121,7 @@ for participant =1:nb %Cycle through participants
         'timewindow',  [], ...
      'eeg', [0,100],'rejectmode',2);
  
-    % % ===== ERP computation =====
+    %%  ===== ERP computation =====
     
       sFilesAvg = bst_process('CallProcess', 'process_average', [sFilesEpochs3, sFilesEpochs4], [], ...
        'avgtype',    5, ...  % By trial groups (folder average)
@@ -166,10 +166,11 @@ for participant =1:nb %Cycle through participants
     end
 
 
-    % % ===delete  subject for space issues
+    % delete  subject for space issues
     % bst_process('CallProcess', 'process_delete','subjectname',    SubjectName)
 end
 
+%% === Save variables and csv files ====
 save('All_ERP_BS','All_ERP_BS');
 
 All_ERP=All_ERP(:,:,151:750,:).*1000000; % the unit in BS is in microVolts so it should be transfomed
