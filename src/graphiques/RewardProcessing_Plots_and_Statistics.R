@@ -33,16 +33,17 @@ FFT_APA_Style = theme(axis.line.x = element_line(color="black", size = 0.5), #Ad
                       legend.text=element_text(size=30), #Make legend text 30 size
                       legend.key.width = unit(3,"cm"), #Determine legend width
                       text = element_text(size=40)) #Make text 20 size
-nbsubjects=500;
 #### Load and Manipulate Data                                             ####
 #ERP
-data = read.csv('RewP_Waveforms.csv',header = FALSE) #Load ERP data
+data = read.csv('refcommun_RewP_Waveforms.csv',header = FALSE) #Load ERP data
 colnames(data) = c('Time','Gain','Loss','Difference') #Rename columns
-pdata = read.csv('RewP_Waveforms_AllPs.csv',header = FALSE) #Load participant ERP data
+pdata = read.csv('refcommun_RewP_Waveforms_AllPs.csv',header = FALSE) #Load participant ERP data
+nbsubjects=dim(pdata)[1]/2;
+
 pdata$subject = as.factor(1:nbsubjects) #Add participant ID
 pdata$condition = as.factor(c(rep(1,nbsubjects),rep(2,nbsubjects))) #Add condition ID
 pdata_original = pdata #Re-allocate variable so not to lose it (later it gets modified)
-data_Latency = read.csv('RewP_Latency.csv',header = FALSE)  #Load ERP peak time data
+data_Latency = read.csv('refcommun_RewP_Latency.csv',header = FALSE)  #Load ERP peak time data
 
 #### Compute 95% confidence intervals                                     ####
 #Figure 2 Error Bars
@@ -109,9 +110,10 @@ ggsave(plot = plots, filename = 'Figure 2 - ERPs.jpeg', width = 8.72, height = 1
 #### Figure 3                                                             ####
 p_diffdata = pdata #Recall difference pdata
 pdata = pdata_original #Recall original data
-p_diffdata=-pdata[1:nbsubjects,1:600]+pdata[(nbsubjects+1):(nbsubjects*2),1:600];
+p_diffdata=+pdata[1:nbsubjects,1:600]-pdata[(nbsubjects+1):(nbsubjects*2),1:600];
 
 peak_time = which(dataDW$Amplitude==max(dataDW$Amplitude)) #Determine peak time of grand averaged difference wave (for N200)
+peak_time=peak_time[1]
 base_time = which(dataDW$Amplitude[188:226]==min(dataDW$Amplitude[188:226]))+187 #Determine min peak time of the P200
 mean_peaks = rowMeans(p_diffdata[,sum(peak_time,-23):sum(peak_time,23)]) #Determine mean peak vlues around grand average peak for difference wave
 gain_peaks = rowMeans(pdata[1:nbsubjects,sum(239,-23):sum(239,23)]) #Determine mean peak values around grand average peak for gain waveform
@@ -120,7 +122,7 @@ max_peaks = apply(p_diffdata[,200:300], 1, max) #Determine max peak values aroun
 basetopeaks_peaks = apply(p_diffdata[,200:300], 1, max) - apply(p_diffdata[,175:225], 1, min) #Determine base-to-peak values around the N200 peak - P200 peak
 base_peaks =  apply(p_diffdata[,175:225], 1, min) #Determine base peak values of the P200
 
-peak_measures = matrix(NA,nbsubjects*5,2) #Create variable to store peaks
+peak_measures = matrix(NA,(nbsubjects*5),2) #Create variable to store peaks
 peak_measures[,1] = c(mean_peaks,max_peaks,basetopeaks_peaks,gain_peaks,lose_peaks) #Store all peak values
 peak_measures[,2] = c(rep('Mean',nbsubjects),rep('Maximum', nbsubjects), rep('Base to Peak',nbsubjects),rep('Gain', nbsubjects),rep('Loss', nbsubjects)) #Create labels for each peak measure
 peak_measures = as.data.frame(peak_measures) #Convert to data frame
@@ -129,7 +131,7 @@ peak_measures$Amplitude = as.numeric(as.character(peak_measures$Amplitude)) #Con
 peak_measures$Condition = factor(peak_measures$Condition, levels = c('Mean','Maximum','Base to Peak','Gain','Loss')) #Reorganize factor order
 
 ####  Figure 3A                                                           ####
-peaks_plot = ggplot(peak_measures[1:nbsubjects*3,],aes(x=Condition,y=Amplitude,fill = Condition))+ #Setup plot
+peaks_plot = ggplot(peak_measures[1:(nbsubjects*3),],aes(x=Condition,y=Amplitude,fill = Condition))+ #Setup plot
   geom_hline(yintercept=0, linetype="dotted")+ #Insert y = 0 amplitude indicator line
   stat_summary(fun.data = "mean_sdl", geom = "crossbar",width = .1, alpha = 1,fun.args = list(mult = 3))+ #Insert 3 SD crossbar
   stat_summary(fun.data = "mean_sdl", geom = "crossbar",width = .2, alpha = 1,fun.args = list(mult = 2))+ #Insert 2 SD crossbar
@@ -153,7 +155,7 @@ peaks_plot = ggplot(peak_measures[1:nbsubjects*3,],aes(x=Condition,y=Amplitude,f
 peaks_plot #Display plot
 
 ####  Figure 3B                                                           ####
-peak_plot_conditional = ggplot(peak_measures[(nbsubjects*3):(nbsubjects*5),],aes(x=Condition,y=Amplitude,fill = Condition))+ #Setup plot
+peaks_plot_conditional = ggplot(peak_measures[(nbsubjects*3+1):(nbsubjects*5),],aes(x=Condition,y=Amplitude,fill = Condition))+ #Setup plot
   geom_hline(yintercept=0, linetype="dotted")+ #Insert y = 0 amplitude indicator line
   stat_summary(fun.data = "mean_sdl", geom = "crossbar",width = .1, alpha = 1,fun.args = list(mult = 3))+ #Insert 3 SD crossbar
   stat_summary(fun.data = "mean_sdl", geom = "crossbar",width = .2, alpha = 1,fun.args = list(mult = 2))+ #Insert 2 SD crossbar
@@ -174,7 +176,7 @@ peak_plot_conditional = ggplot(peak_measures[(nbsubjects*3):(nbsubjects*5),],aes
         panel.grid.minor = element_blank(), #Remove minor grid
         panel.background = element_blank(), #Remove background
         panel.border = element_blank()) #Remove border
-peak_plot_conditional #Display plot
+peaks_plot_conditional #Display plot
 
 ####  Figure 3C                                                           ####
 colnames(data_Latency) = ('Amplitude') #Rename column
@@ -245,3 +247,38 @@ ERPlose_Cohend = cohen.d(lose_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct co
 
 matrix2 <- matrix(c(ERPgain_TTest$estimate, ERPlose_TTest$estimate, ERPgain_SD, ERPlose_SD, ERPgain_Cohend$estimate,ERPlose_Cohend$estimate), nrow = 2)
 
+
+##########################################################################
+#### Statistics                                                           ####
+##########################################################################
+#### Table 1                                                              ####
+####  ERP                                                                 ####
+
+ERPMean_TTest = t.test(mean_peaks,mu=0) #Conduct t-test
+ERPMean_SD = sd(mean_peaks) #Determine standard deviation
+ERPMean_Cohend = cohen.d(mean_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+ERPMax_TTest = t.test(max_peaks,mu=0) #Conduct t-test
+ERPMax_SD = sd(max_peaks) #Determine standard deviation
+ERPMax_Cohend = cohen.d(max_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+ERPBtP_TTest = t.test(basetopeaks_peaks,mu=0) #Conduct t-test
+ERPBtP_SD = sd(basetopeaks_peaks) #Determine standard deviation
+ERPBtP_Cohend = cohen.d(basetopeaks_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+ERPP200_TTest = t.test(base_peaks,mu=0) #Conduct t-test
+ERPP200_SD = sd(base_peaks) #Determine standard deviation
+ERPP200_Cohend = cohen.d(base_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+matrix1 <- matrix(c(ERPMean_TTest$estimate, ERPMax_TTest$estimate, ERPBtP_TTest$estimate, ERPMean_SD, ERPMax_SD, ERPBtP_SD,ERPMean_Cohend$estimate,ERPMax_Cohend$estimate,ERPBtP_Cohend$estimate), nrow = 3)
+#### Table 2                                                              ####
+####  ERP                                                                 ####
+ERPgain_TTest = t.test(gain_peaks,mu=0) #Conduct t-test
+ERPgain_SD = sd(gain_peaks) #Determine standard deviation
+ERPgain_Cohend = cohen.d(gain_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+ERPlose_TTest = t.test(lose_peaks,mu=0) #Conduct t-test
+ERPlose_SD = sd(lose_peaks) #Determine standard deviation
+ERPlose_Cohend = cohen.d(lose_peaks,rep(0,nbsubjects),paired = TRUE) #Conduct cohen's d effect size
+
+matrix2 <- matrix(c(ERPgain_TTest$estimate, ERPlose_TTest$estimate, ERPgain_SD, ERPlose_SD, ERPgain_Cohend$estimate,ERPlose_Cohend$estimate), nrow = 2)

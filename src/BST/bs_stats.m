@@ -9,14 +9,11 @@ P_Bonf=0.01/nbchan/nbpt;
 
 StatDiff=zeros(nbchan,nbpt);
 
-load('All_ERP_BS_final.mat')
+load('All_ERP_BS.mat')
 All_ERP2=All_ERP;
 
-load('AR500_All_ERP.mat')
-
-
+load('All_ERP_ref.mat')
 All_ERP=All_ERP(:,151:750,:,:);
-
 tt1=squeeze(All_ERP2(1,26,:,:));
 tt2=squeeze(All_ERP2(2,26,:,:));
 
@@ -25,16 +22,10 @@ idx1 = isnan(tt1) ;
 [r1,c1]=find(tt1==0);
 [r1,c3]=find(idx1);
 
-% tt1(:,unique(c1))=[];
-% tt2(:,unique(c1))=[];
-
 idx2 = isnan(tt2) ;
 [r2,c2]=find(tt2==0);
 [r1,c4]=find(idx2);
 
-% tt2(:,unique(c2))=[];
-% tt1(:,unique(c2))=[];
-% 
 toberemoved=unique([unique(c1) ;unique(c2); unique(c3); unique(c4)]);
 tKept1=[];tKept2=[];
 kept_bs=[];
@@ -44,13 +35,13 @@ for su=1:500
             kept_bs(end+1)=su;
             tKept1(:,end+1)=tt1(:,su);
             tKept2(:,end+1)=tt2(:,su);
-
     end
 end
 
 All_ERP2=All_ERP2(:,:,:,kept_bs).*1000000;
 
 
+%% === Map for each condition (gain, loss) ====
 
 condition_name={'Win','Loss'};
 
@@ -101,19 +92,19 @@ timeToPlot=-200:2:1000;
 tt=-200:200:1000;
 
 if(condition==1)
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
         1 0 0
         0 1 0
         0 0 1
-        213/255 23/255 0];
+        66/255 66/255 66/255];
         gain_btw(1,3)=length(find(StatDiff));
 
 else
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
     1 0 0
     0 1 0
     0 0 1
-    129/255 183/255 216/255];
+    66/255 66/255 66/255];
     loss_btw(1,3)=length(find(StatDiff));
 
 
@@ -212,11 +203,11 @@ timeToPlot=-200:2:1000;
 tt=-200:100:1000;
 
 ax(3)=subplot(2,3,3)
-    mymap = [0.8 0.8 0.8
+    mymap = [234/255 234/255 234/255
     1 0 0
     0 1 0
     0 0 1
-    242/255 125/255 82/255];
+    66/255 66/255 66/255];
 
 imagesc(StatDiff)
 colormap(ax(3),mymap)

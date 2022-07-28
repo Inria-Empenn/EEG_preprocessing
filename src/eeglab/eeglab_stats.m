@@ -59,16 +59,10 @@ idx1 = isnan(tt1) ;
 [r1,c1]=find(tt1==0);
 [r1,c3]=find(idx1);
 
-% tt1(:,unique(c1))=[];
-% tt2(:,unique(c1))=[];
-
 idx2 = isnan(tt2) ;
 [r2,c2]=find(tt2==0);
 [r1,c4]=find(idx2);
 
-% tt2(:,unique(c2))=[];
-% tt1(:,unique(c2))=[];
-%
 toberemoved=unique([unique(c1) ;unique(c2); unique(c3); unique(c4)]);
 tKept1=[];tKept2=[];
 kept_eeglab=[];
