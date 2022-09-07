@@ -1,66 +1,66 @@
-% %   % %% PREPROCESSING
-% %  % %% Stage 1: Process data to determine noisy/faulty electrodes
-% %  % %%  Step 1.1: Pre-ICA
-% %  clear all;
-% %  dirdata='data/Raw Data Part 1';
-% %  cd(dirdata); %Find and change working folder to raw EEG data
-% %  filenames = dir('*.vhdr');
-% % 
-% %  for participant = 1:500 %Cycle through participants
-% % 
-% %      %Get participant name information
-% %      disp(['Participant: ', num2str(participant)]) %Display current participant being processed
-% %      participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
-% %      participant_varname = ['RewardProcessing_S1Post_',participant_number{2}]; %Create new file name
-% %      
-% %      %Load Data
-% %      EEG = []; %Clear past data
-% %      [EEG] = doLoadBVData(filenames(participant).name  ); %Load raw EEG data
-% %      
-% %      %Make it a 32 channels cap - reduces any participants with a 64 channel system
-% %      if EEG.nbchan > 31 %Determine whether current participant is a 64 channel setup
-% %          [EEG] = doRemoveChannels(EEG,{'AF3','AF4','AF7','AF8','C1','C2','C5','C6','CP3','CPz','F1','F2','F5','F6','FC3','FC4','FT10','FT7','FT8','FT9','Oz','P1','P2','P5','P6','PO3','PO4','PO7','PO8','TP7','TP8','CP4'},EEG.chanlocs); %Removes electrodes that are not part of the 32 channel system
-% %      end
-% %      
-% %      %Re-Reference
-% %      load('ChanlocsMaster.mat'); %Load channel location file, please make sure the location of this file is in your path
-% %  %     chanlocsMaster([10,21]) = []; %Remove channels TP9 and TP10 as they will be the references
-% %      [EEG] = doRereference(EEG,{'TP9','TP10'},{'ALL'},EEG.chanlocs); %Reference all channels to an averaged TP9/TP10 (mastoids)
-% %      [EEG] = doRemoveChannels(EEG,{'TP9','TP10'},EEG.chanlocs); %Remove reference channels from the data
-% %      [EEG] = doInterpolate(EEG,chanlocsMaster,'spherical'); %Interpolate the electrode used as reference during recording (AFz)
-% % 
-% %      %Filter
-% %      [EEG] = doFilter(EEG,0.1,30,4,60,EEG.srate); %Filter data: Low cutoff 0.1, high cutoff 30, order 4, notch 60
-% %      
-% % %      %ICA
-% %  %     [EEG] = doICA(EEG,1); %Run ICA for use of eye blink removal
-% %     
-% %      %Segment Data  
-% %      [EEG] = doSegmentData(EEG,{'S110','S111'},[-500 1498]); %Segment Data (S110 = Loss, S111 = Win)
-% %      
-% %      %Baseline Correction
-% %      [EEG] = doBaseline(EEG,[-200,0]); %Baseline correction in ms
-% %     
-% %      %Artifact Rejection
-% %      [EEG] = doArtifactRejection(EEG,'Gradient',10); %Use a 10 uV/ms gradient criteria
-% %      [EEG] = doArtifactRejection(EEG,'Difference',100); %Use a 100 uV max-min criteria
-% % 
-% %      %Extract Artifact Rejection Output
-% %      AR_indx = []; trials_removed = []; %Clear past participant data
-% %      AR_indx = EEG.artifactPresent; %Reassign artifact rejection output
-% %      AR_indx(AR_indx > 1)=1; %Re-ID any indication of a rejected segment to be identified as the number 1
-% %      trials_removed = sum(AR_indx')/size(AR_indx,2); %Determine the percentage of segments removed for each electrode
-% %     
-% %      %Save rejection information into a variable: electrodes with a trial rejection rate greater than 40% were tagged for removal
-% %       p_chanreject{participant,1} = cellstr(participant_number{2}); %Insert participant number
-% %       p_chanreject{participant,2} = cellstr(num2str(0.4)); %insert lowest level within which less than ten electrodes have been removed
-% %       p_chanreject{participant,3} = cellstr(num2str(find(trials_removed>0.4))); %Determine the indices of electrodes to be removed      
-% % 
-% %      %Save Output
-% % %      save(participant_varname,'EEG'); %Save the current output so that the lengthy ICA process can run without user intervention
-% %  end
-% %     %Save channels to reject information into a mat file
-% %  save('Chans_rejected500.mat','p_chanreject');
+  % %% PREPROCESSING
+ % %% Stage 1: Process data to determine noisy/faulty electrodes
+ % %%  Step 1.1: Pre-ICA
+ clear all;
+ dirdata='data/Raw Data Part 1';
+ cd(dirdata); %Find and change working folder to raw EEG data
+ filenames = dir('*.vhdr');
+
+ for participant = 1:500 %Cycle through participants
+
+     %Get participant name information
+     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
+     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
+     participant_varname = ['RewardProcessing_S1Post_',participant_number{2}]; %Create new file name
+     
+     %Load Data
+     EEG = []; %Clear past data
+     [EEG] = doLoadBVData(filenames(participant).name  ); %Load raw EEG data
+     
+     %Make it a 32 channels cap - reduces any participants with a 64 channel system
+     if EEG.nbchan > 31 %Determine whether current participant is a 64 channel setup
+         [EEG] = doRemoveChannels(EEG,{'AF3','AF4','AF7','AF8','C1','C2','C5','C6','CP3','CPz','F1','F2','F5','F6','FC3','FC4','FT10','FT7','FT8','FT9','Oz','P1','P2','P5','P6','PO3','PO4','PO7','PO8','TP7','TP8','CP4'},EEG.chanlocs); %Removes electrodes that are not part of the 32 channel system
+     end
+     
+     %Re-Reference
+     load('ChanlocsMaster.mat'); %Load channel location file, please make sure the location of this file is in your path
+ %     chanlocsMaster([10,21]) = []; %Remove channels TP9 and TP10 as they will be the references
+     [EEG] = doRereference(EEG,{'TP9','TP10'},{'ALL'},EEG.chanlocs); %Reference all channels to an averaged TP9/TP10 (mastoids)
+     [EEG] = doRemoveChannels(EEG,{'TP9','TP10'},EEG.chanlocs); %Remove reference channels from the data
+     [EEG] = doInterpolate(EEG,chanlocsMaster,'spherical'); %Interpolate the electrode used as reference during recording (AFz)
+
+     %Filter
+     [EEG] = doFilter(EEG,0.1,30,4,60,EEG.srate); %Filter data: Low cutoff 0.1, high cutoff 30, order 4, notch 60
+     
+%      %ICA
+ %     [EEG] = doICA(EEG,1); %Run ICA for use of eye blink removal
+    
+     %Segment Data  
+     [EEG] = doSegmentData(EEG,{'S110','S111'},[-500 1498]); %Segment Data (S110 = Loss, S111 = Win)
+     
+     %Baseline Correction
+     [EEG] = doBaseline(EEG,[-200,0]); %Baseline correction in ms
+    
+     %Artifact Rejection
+     [EEG] = doArtifactRejection(EEG,'Gradient',10); %Use a 10 uV/ms gradient criteria
+     [EEG] = doArtifactRejection(EEG,'Difference',100); %Use a 100 uV max-min criteria
+
+     %Extract Artifact Rejection Output
+     AR_indx = []; trials_removed = []; %Clear past participant data
+     AR_indx = EEG.artifactPresent; %Reassign artifact rejection output
+     AR_indx(AR_indx > 1)=1; %Re-ID any indication of a rejected segment to be identified as the number 1
+     trials_removed = sum(AR_indx')/size(AR_indx,2); %Determine the percentage of segments removed for each electrode
+    
+     %Save rejection information into a variable: electrodes with a trial rejection rate greater than 40% were tagged for removal
+      p_chanreject{participant,1} = cellstr(participant_number{2}); %Insert participant number
+      p_chanreject{participant,2} = cellstr(num2str(0.4)); %insert lowest level within which less than ten electrodes have been removed
+      p_chanreject{participant,3} = cellstr(num2str(find(trials_removed>0.4))); %Determine the indices of electrodes to be removed      
+
+     %Save Output
+%      save(participant_varname,'EEG'); %Save the current output so that the lengthy ICA process can run without user intervention
+ end
+    %Save channels to reject information into a mat file
+ save('Chans_rejected500.mat','p_chanreject');
  
  %% Stage 2: Process data for analysis
  clear all; close all; clc; %First, clean the environment
@@ -109,6 +109,9 @@ load('Chans_rejected500.mat');
      %Remove faulty electrodes
     p_chans = []; %Clear past participants electrode indices
     p_chans = strsplit(p_chanreject{participant,3}{1},' '); %Extract the indices of electrodes to remove
+    %     save the number of channels removed/interpolated
+    All_rejChan(participant)=length(p_chans);
+
     chans_to_remove = []; %Clear past participants electrode labels
     if ~isempty(p_chans{1}) %Determine whether electrodes need to be removed
         x = 1; %Begin index count
@@ -181,6 +184,8 @@ load('Chans_rejected500.mat');
  end
  
  save('Ref_All_ERP', 'All_ERP'); %Save ERP Data
+ save('All_trials', 'All_trials'); %Save ERP Data
+ save('All_rejChan', 'All_rejChan'); %Save ERP Data
 
 %  All_ERP=All_ERP(:,151:750,:,:);
 %  % %% RewP_Waveforms
