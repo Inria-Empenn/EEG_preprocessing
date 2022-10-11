@@ -13,6 +13,10 @@ All_ERP2=All_ERP2(:,151:750,:,:);
 
 condition_name={'Win','Loss','Difference'};
 matp=zeros(29,600,3);
+
+% % Section 2: Compute the cluster-based permutation maps for each
+% condition- gain, loss, difference
+
 for cond=1:3 
     for ch=1:29
         ch
@@ -74,6 +78,7 @@ tt=-200:200:1000;
         0 1 0
         0 0 1
         66/255 66/255 66/255];
+% % Section 2: Plot results
 
 for condition=1:3
     StatDiff=matp(:,:,condition);
