@@ -39,7 +39,7 @@
      [EEG] = doSegmentData(EEG,{'S110','S111'},[-500 1498]); %Segment Data (S110 = Loss, S111 = Win)
      
      %Baseline Correction
-     [EEG] = doBaseline(EEG,[-200,0]); %Baseline correction in ms
+     [EEG] = doBaseline(EEG,[-200/1000,0]); %Baseline correction in ms
     
      %Artifact Rejection
      [EEG] = doArtifactRejection(EEG,'Gradient',10); %Use a 10 uV/ms gradient criteria
@@ -187,7 +187,6 @@ load('Chans_rejected500.mat');
  save('All_trials', 'All_trials'); %Save ERP Data
  save('All_rejChan', 'All_rejChan'); %Save ERP Data
 
-%  All_ERP=All_ERP(:,151:750,:,:);
 %  % %% RewP_Waveforms
 %  csvwrite('Ref_RewP_Waveforms.csv',[(-200:2:998)',nanmean(squeeze(All_ERP(26,:,1,:)),2),nanmean(squeeze(All_ERP(26,:,2,:)),2),nanmean(squeeze(All_ERP(26,:,1,:)),2)-nanmean(squeeze(All_ERP(26,:,2,:)),2)]); %Export data. Conditions: Time, Loss, Win, Difference. Electrode 26 is FCz.
 %  % %% RewP_Waveforms_AllPs
