@@ -4,9 +4,9 @@ nbchan=29;
 nbpt=600;
 
 % % Section 1: Compute the statistical map(channels x time) showing the difference between FieldTrip and paper results in terms of conditional erp
-load('results/Ref_All_ERP.mat')
+load('../../results/Ref_All_ERP.mat')
 All_ERP1=All_ERP;
-load('results/eeglab_All_ERP_samePipe.mat')
+load('../../results/eeglab_All_ERP_samePipe.mat')
 All_ERP2=All_ERP;
 All_ERP1=All_ERP1(:,151:750,:,:);
 All_ERP2=All_ERP2(:,151:750,:,:);
@@ -93,4 +93,4 @@ for condition=1:3
     ylabel('Channels');
     title([condition_name{condition} ' condition']);
 end
-save('matp_eeglab','matp');
+save('../../results/matp_eeglab','matp');
