@@ -2,7 +2,7 @@
 % %  --- This is the preprocessing workflow reproduced by EEGLAB functions---
 % % For contact: aya.kabbara7@gmail.com
 
-cd('tools/eeglab2022.1');
+cd('../../tools/eeglab2022.1');
 %% === 1st pass: Detect bad channels ====
 
 filenames = dir('../../data/*.vhdr')
@@ -183,9 +183,9 @@ end
 
 %% === Save variables and csv files ====
 
-save('results/EEGLAB_All_ERP_samePipe', 'All_ERP'); %Save ERP Data
-save('results/EEGLAB_All_trials_samePipe', 'All_trials'); %Save ERP Data
-save('results/EEGLAB_All_rejChan_samePipe', 'All_rejChan'); %Save ERP Data
+save('../../results/EEGLAB_All_ERP_samePipe', 'All_ERP'); %Save ERP Data
+save('../../results/EEGLAB_All_trials_samePipe', 'All_trials'); %Save ERP Data
+save('../../results/EEGLAB_All_rejChan_samePipe', 'All_rejChan'); %Save ERP Data
 
 All_ERP=All_ERP_eeglab(:,151:750,:,:);
 chanOfInterest=17;
@@ -194,9 +194,9 @@ chanOfInterest=17;
 win_erp=squeeze(All_ERP(chanOfInterest,:,1,:));
 loss_erp=squeeze(All_ERP(chanOfInterest,:,2,:));
 % %% RewP_Waveforms
-csvwrite('eeglab_RewP_Waveforms.csv',[(-200:2:998)',nanmean(squeeze(All_ERP(chanOfInterest,:,1,:)),2),nanmean(squeeze(All_ERP(chanOfInterest,:,2,:)),2),nanmean(squeeze(All_ERP(chanOfInterest,:,1,:)),2)-nanmean(squeeze(All_ERP(chanOfInterest,:,2,:)),2)]); %Export data. Conditions: Time, Loss, Win, Difference. Electrode 26 is FCz.
-csvwrite('eeglab_RewP_Waveforms_AllPs.csv',[win_erp,loss_erp]'); %Export data. Conditions: Loss, Win. Electrode 26 is FCz.
+csvwrite('../../results/eeglab_RewP_Waveforms.csv',[(-200:2:998)',nanmean(squeeze(All_ERP(chanOfInterest,:,1,:)),2),nanmean(squeeze(All_ERP(chanOfInterest,:,2,:)),2),nanmean(squeeze(All_ERP(chanOfInterest,:,1,:)),2)-nanmean(squeeze(All_ERP(chanOfInterest,:,2,:)),2)]); %Export data. Conditions: Time, Loss, Win, Difference. Electrode 26 is FCz.
+csvwrite('../../results/eeglab_RewP_Waveforms_AllPs.csv',[win_erp,loss_erp]'); %Export data. Conditions: Loss, Win. Electrode 26 is FCz.
 % %% RewP_Latency
 [~,peak_loc] = max(squeeze(All_ERP(chanOfInterest,226:276,1,:))-squeeze(All_ERP(chanOfInterest,226:276,2,:))); %Determine where the peak amplitude is for each participant. Electrode 26 is FCz.
 peak_loc = (((peak_loc+225)*2)-200)/1000; %Convert into seconds
-csvwrite('eeglab_RewP_Latency.csv',peak_loc'); %Export data
+csvwrite('../../results/eeglab_RewP_Latency.csv',peak_loc'); %Export data
