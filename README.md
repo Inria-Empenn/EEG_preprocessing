@@ -89,7 +89,7 @@ Note:  The name of csv files should be changed accordingly.
 
 ### Reproducing Figure 2D,Figure 3D using FieldTrip
 
-2. Run the analysis with [ftPreprocessing.m](src/fieldtrip/ftpreprocessing.m). 
+2. Run the analysis with [ftpreprocessing.m](src/fieldtrip/ftpreprocessing.m). 
 3. Create  figures 2D,3D and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
 ### Reproducing Figure 4
