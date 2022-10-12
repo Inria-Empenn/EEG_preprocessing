@@ -78,47 +78,32 @@ Note:  The name of csv files should be changed accordingly.
 
 ###  Reproducing Figure 2B, Figure 3B using EEGLAB
 
-1. Add path to corresponding dependencies listed above using:
-```
-    addpath(genpath('dependencyDir'))
-```
-
-2. Run the analysis [eeglab_preprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_preprocessing.m).
-3. Create figures 2B,3B and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
+1. Run the analysis [eeglab_preprocessing.m](src/eeglab/eeglab_preprocessing.m).
+2. Create figures 2B,3B and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
 
 ### Reproducing Figure 2C,Figure 3C using Brainstorm
 
-1. Add path to corresponding dependencies listed above using:
-```
-    addpath(genpath('dependencyDir'))
-```
-2. Convert the dataset into EEGLAB set using the following functions: [toset.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/toset.m) 
-3. Run the analysis with [bsPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bsPreprocessing.m). 
-4. Create figures 2C,3C and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
+1. Run the analysis with [bsPreprocessing.m](src/BST/bsPreprocessing.m). 
+2. Create figures 2C,3C and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
 ### Reproducing Figure 2D,Figure 3D using FieldTrip
 
-1. Add path to corresponding dependencies listed above using:
-```
-    addpath(genpath('dependencyDir'))
-```
-
-2. Run the analysis with [ftPreprocessing.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/ftPreprocessing.m). 
-3. Create  figures 2D,3D and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
+2. Run the analysis with [ftPreprocessing.m](src/fieldtrip/ftPreprocessing.m). 
+3. Create  figures 2D,3D and generate the related values in tables 1,2 using the R script [RewardProcessing_Plots_and_Statistics.R](src/graphiques/RewardProcessing_Plots_and_Statistics.R).Note: the name of csv files should be changed accordingly.
 
 ### Reproducing Figure 4
 
-1. Prepare the csv files containing the feature to be plotted using [fig4_preparation.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/fig4_preparation.m). This script calls the function [extract_features.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/extract_features.m). 
-2. Create the figure using [Fig4.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig4.py)
+1. Prepare the csv files containing the feature to be plotted using [fig4_preparation.m](src/graphiques/fig4_preparation.m). This script calls the function [extract_features.m](src/graphiques/extract_features.m). 
+2. Create the figure using [Fig4.py](src/graphiques/Fig4.py)
 
 ### Reproducing Figure 5
 
-1. Generate the similarity matrix (for both conditions) using the function [similarity_calc.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/similarity_calc.m)
-2. Create the figure using [Fig5.py](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/Fig5.py)
+1. Generate the similarity matrix (for both conditions) using the function [similarity_calc.m](src/graphiques/similarity_calc.m)
+2. Create the figure using [Fig5.py](src/graphiques/Fig5.py)
 
 ### Reproducing Figure 6
 
-Create Figure 6.A using [eeglab_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/eeglab/eeglab_stats.m), Figure 6.B using [bs_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/BST/bs_stats.m) and Figure 6.C using [ft_stats.m](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/fieldtrip/ft_stats.m)
+Create Figure 6.A using [eeglab_stats.m](src/eeglab/eeglab_stats.m), Figure 6.B using [bs_stats.m](src/BST/bs_stats.m) and Figure 6.C using [ft_stats.m](src/fieldtrip/ft_stats.m)
 
 
