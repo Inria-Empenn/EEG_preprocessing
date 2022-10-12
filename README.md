@@ -19,7 +19,9 @@ This study sheds light on how the software tool used to preprocess EEG signals i
 
 ## Abstract
 
-As an active field of research, Electroencephalography (EEG) analysis workflow has increasing flexibility and complexity, with a great variety of methodological options and tools to be selected at each step. This high analytical flexibility can be problematic as it can yield variability in research outcomes. Therefore, growing attention has been recently paid to understand the potential of different methodological decisions to influence the reproducibility of results. In this paper, we aim to examine how sensitive the results of EEG analyses are to variations in software tools. We reanalyzed shared EEG data (N=500) previously used in a published task EEG study using three of the most commonly used software tools: EEGLAB, Brainstorm and FieldTrip. After reproducing the same original preprocessing workflow in each software, the resultant evoked-related potentials (ERPs) were qualitatively and quantitatively compared in order to examine the degree of consistency/discrepancy between softwares. Our findings show a good degree of convergence in terms of the general profile of ERP waveforms, peak latencies and effect size estimates related to specific signal features. However, considerable variability was also observed between software packages as reflected by the similarity values and observed statistical differences at particular channels and time instants. In conclusion, we believe that this study provides valuable clues to better understand the impact of the software tool on analysis results of EEG.
+As an active field of research and with the development of state-of-the-art algorithms to analyze EEG datasets, the parametrization of Electroencephalography (EEG) analysis workflows has become increasingly flexible and complex, with a great variety of methodological options and tools to be selected at each step. This high analytical flexibility can be problematic as it can yield to variability in research outcomes. Therefore, growing attention has been recently paid to understand the potential impact of different methodological decisions on the reproducibility of results. 
+In this paper, we aim to examine how sensitive the results of EEG analyses are to variations in preprocessing with different software tools. We reanalyzed the shared EEG data (N=500) from  (Williams et al., 2021) using three of the most commonly used open-source Matlab-based EEG software tools: EEGLAB, Brainstorm and FieldTrip. After reproducing the same original preprocessing workflow in each software, the resulting evoked-related potentials (ERPs) were qualitatively and quantitatively compared in order to examine the degree of consistency/discrepancy between software packages. Our findings show a good degree of convergence in terms of the general profile of ERP waveforms, peak latencies and effect size estimates related to specific signal features. However, considerable variability was also observed in the magnitude of the absolute voltage observed with each software package as reflected by the similarity values and observed statistical differences at particular channels and time instants. In conclusion, we believe that this study provides valuable clues to better understand the impact of the software tool on the analysis of EEG results.
+
 
 ## Software implementation
 
@@ -62,18 +64,16 @@ https://github.com/Neuro-Tools/MATLAB-EEG-icaTools.
 
 - FieldTrip script: This script uses FieldTrip functions available at https://www.fieldtriptoolbox.org/download/
 
+All the tools directories are downloaded in `tools`. 
+
 ## Reproducing the results
 
 ### Reproducing Figure 2A, Figure 3A  using the reference script of (Williams et al, 2021)
 
 > We used the same preprocessing code provided by the original paper, by eliminating the step of manual ICA employed to detect the arttifactual components related to eye blinks
 
-1. Add path to corresponding dependencies listed above using:
-```
-    addpath(genpath('dependencyDir'))
-```
-2. Run the analysis with [RewardsPreprocessing_withoutICA.m](https://github.com/AyaKabbara/StageEEGpre/tree/main/src/article/RewardsPreprocessing_withoutICA.m). This script will store the ERPs of all participants in a .mat file. It will also generate the csv files to be used for plotting the figures and the calculation of the descriptive statistics. 
-3. Create figures 2A,3A and generate the related values in tables 1,2 using the following R script: [RewardProcessing_Plots_and_Statistics.R](https://github.com/AyaKabbara/StageEEGpre/blob/main/src/graphiques/RewardProcessing_Plots_and_Statistics.R).
+1. Run the analysis with [RewardsPreprocessing_withoutICA.m](src/article/RewardsPreprocessing_withoutICA.m). This script will store the ERPs of all participants in a .mat file. It will also generate the csv files to be used for plotting the figures and the calculation of the descriptive statistics. 
+2. Create figures 2A,3A and generate the related values in tables 1,2 using the following R script: [RewardProcessing_Plots_and_Statistics.R](src/graphiques/RewardProcessing_Plots_and_Statistics.R).
 Note:  The name of csv files should be changed accordingly.
 
 ###  Reproducing Figure 2B, Figure 3B using EEGLAB
