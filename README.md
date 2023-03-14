@@ -47,10 +47,9 @@ The channel location file should be also downloaded from https://osf.io/ztw8u/ C
 
 You can download a copy of all the files in this repository by cloning the
 [git](https://git-scm.com/) repository:
-
-    git clone https://github.com/AyaKabbara/EEG_preprocessing.git
-
-or [download a zip archive](https://github.com/AyaKabbara/StageEEGpre/archive/master.zip).
+    git clone https://github.com/Inria-Empenn/EEG_preprocessing.git
+    
+or [download a zip archive](https://github.com/Inria-Empenn/EEG_preprocessing/archive/master.zip).
 
 ## Dependencies
 - Reference script: To re-run the script of the reference paper,  one should first download the Neuro-Tools package from https://github.com/Neuro-Tools/ including https://github.com/Neuro-Tools/MATLAB-EEG-preProcessing, 
