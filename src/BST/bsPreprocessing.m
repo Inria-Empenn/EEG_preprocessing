@@ -1,21 +1,21 @@
 % %  --- This is the preprocessing workflow reproduced by Brainstorm functions---
 % % For contact: aya.kabbara7@gmail.com
 
-cd('../../tools/brainstorm');
+% cd('../../tools/brainstorm');
 % ======= CREATE PROTOCOL =======
 % The protocol name has to be a valid folder name (no spaces, no weird characters...)
-ProtocolName = 'Protocol_PreProc';
+ProtocolName = 'Protocol_PreProc2';
 % Start brainstorm without the GUI
 if ~brainstorm('status')
     brainstorm nogui
 end
-% Delete existing protocol
-gui_brainstorm('DeleteProtocol', ProtocolName);
+% % Delete existing protocol
+% gui_brainstorm('DeleteProtocol', ProtocolName);
 % Create new protocol
 gui_brainstorm('CreateProtocol', ProtocolName, 0, 0);
 
 % cd('data/Raw Data Part 1'); %Find and change working folder to raw EEG data
-filenames = dir('../../data/*.dat')
+filenames = dir('../../data/set/*.set')
 nb=500;
 trials_1=0;
 trials_2=0;
@@ -30,7 +30,7 @@ for participant =1:nb %Cycle through participants
     disp(['Participant: ', num2str(participant)]) %Display current participant being processed
     participant_number = strsplit(filenames(participant).name(1:end-5),'_'); %Split filename into components
 
-    RawFile = ['/Users/ayakabbara/StageEEGpre/data/Raw Data Part 1/' filenames(participant).name];
+    RawFile = ['/Users/ayakabbara/StageEEGpre/data/set/' filenames(participant).name];
     SubjectName = ['participant_' participant_number{2}];
 
     % Check if the folder contains the required files
@@ -42,7 +42,7 @@ for participant =1:nb %Cycle through participants
     % Process: Create link to raw file
     sFiles = bst_process('CallProcess', 'process_import_data_raw', [], [], ...
         'subjectname',    SubjectName, ...
-        'datafile',       {RawFile,'EEG-BRAINAMP'} , ...
+        'datafile',       {RawFile,'EEGLAB'} , ...
         'channelreplace', 0, ...
         'channelalign',   0)
 
@@ -72,10 +72,10 @@ for participant =1:nb %Cycle through participants
     catch
     end
     %% ==== Filtering ====
-    % Process: Notch filter: 50Hz 100Hz 150Hz
+    % Process: Notch filter:
     sFiles = bst_process('CallProcess', 'process_notch', sFiles, [], ...
         'sensortypes', 'EEG', ...
-        'freqlist',    [50, 100, 150], ...
+        'freqlist',    [60, 120, 180], ...
         'cutoffW',     2, ...
         'useold',      0, ...
         'read_all',    0);
@@ -99,15 +99,13 @@ for participant =1:nb %Cycle through participants
        'subjectname', SubjectName, ...
        'eventname',   'S110', ...
         'timewindow',  [], ...
-          'epochtime',   [-0.5, 1.3], ...
-         'baseline',    [-0.2, 0]);
+          'epochtime',   [-0.5, 1.3]);
 
     sFilesEpochs2 = bst_process('CallProcess', 'process_import_data_event', sFiles, [], ...
            'subjectname', SubjectName, ...
         'eventname',   'S111', ...
         'timewindow',  [], ...
-          'epochtime',   [-0.5, 1.3], ...
-         'baseline',    [-0.2, 0]);
+          'epochtime',   [-0.5, 1.3]);
 
      sFilesEpochs1 = bst_process('CallProcess', 'process_baseline', sFilesEpochs1, [],'baseline',    [-0.2, 0])
      sFilesEpochs2 = bst_process('CallProcess', 'process_baseline', sFilesEpochs2, [],'baseline',    [-0.2, 0])
@@ -133,10 +131,8 @@ for participant =1:nb %Cycle through participants
         dirr=[BS_db ProtocolName '/data/' sFilesAvg(1).FileName];
 
         FF=load(dirr);
-        if(size(FF,1)>32)
+        
                 All_ERP_BS(1,:,:,participant) = FF.F(ChannelsTokeep(1:29),151:750); %Store all the ERP data into a single variable
-        else
-                All_ERP_BS(1,:,:,participant) = FF.F([1:9 11:20 22:31],151:750); %Store all the ERP data into a single variable
 
         end
         trials_1=trials_1+sFilesAvg(1).iStudy;
@@ -146,11 +142,9 @@ for participant =1:nb %Cycle through participants
     try
         dirr=[BS_db ProtocolName '/data/' sFilesAvg(2).FileName];
         FF=load(dirr);
-           if(size(FF,1)>32)
+           
              All_ERP_BS(2,:,:,participant) = FF.F(ChannelsTokeep(1:29),151:750); %Store all the ERP data into a single variable
-           else
-             All_ERP_BS(2,:,:,participant) = FF.F([1:9 11:20 22:31],151:750); %Store all the ERP data into a single variable
-            end
+          
         trials_2=trials_2+sFilesAvg(2).iStudy;
 
     catch
